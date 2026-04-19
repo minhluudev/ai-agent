@@ -31,6 +31,7 @@ description: Design and scaffold Laravel backend modules using Domain-Driven Des
 - Events are immutable, named in past tense, and handlers are idempotent.
 - Cross-domain: emit an Event, never inject another domain's Action or Repository.
 - Controllers and Listeners are thin: validate, translate, delegate.
+- **All controller responses must use the `api-response` skill** — never `response()->json()` directly. Read the skill before writing any controller action.
 
 ## Default Layout
 
@@ -69,6 +70,7 @@ description: Design and scaffold Laravel backend modules using Domain-Driven Des
 
 - Read [references/architecture.md](references/architecture.md) for responsibilities, event flow, directory rules, naming conventions, and anti-patterns.
 - Read [references/templates.md](references/templates.md) for the template file catalog.
+- Use the `api-response` skill when writing Controllers — covers `ApiResponse::success()`, `::problem()`, `::validation()`, status codes, and error code conventions.
 
 ## Response Shape
 
