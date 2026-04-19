@@ -51,6 +51,10 @@ Goal: Create a spec file for a new feature, saved to `docs/features/`.
    ## Out of Scope
 
    - {item 1}
+
+   ## Implementation Plan
+
+   {AI-generated step-by-step plan for implementing this feature. Include: files to create/modify, order of implementation, key decisions, and any risks or unknowns.}
    ```
 
    **If `backend`:**
@@ -90,8 +94,19 @@ Goal: Create a spec file for a new feature, saved to `docs/features/`.
    ## Out of Scope
 
    - {item 1}
+
+   ## Implementation Plan
+
+   {AI-generated step-by-step plan for implementing this feature. Include: files to create/modify, order of implementation, key decisions, and any risks or unknowns.}
    ```
 
-4. Confirm with the user: show the file path and summary, ask if any changes are needed.
+4. After writing the spec, **generate an Implementation Plan** by analyzing the feature requirements and the existing codebase:
+   - Break down the implementation into ordered steps
+   - Identify files to create or modify
+   - Note key technical decisions and trade-offs
+   - Flag any risks or unknowns
+   - Fill in the `## Implementation Plan` section with the result
 
-5. Suggest: "Run `/feature load {filename}` to load this spec into current-feature.md and start implementing."
+5. Confirm with the user: show the file path and summary, ask if any changes are needed.
+
+6. Suggest: "Run `/feature load {filename}` to load this spec into current-feature.md and start implementing."

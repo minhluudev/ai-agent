@@ -60,6 +60,10 @@ Goal: Create a spec file for a bug fix, saved to `docs/fixes/`.
 
    - [ ] {test case 1}
    - [ ] {test case 2}
+
+   ## Implementation Plan
+
+   {AI-generated step-by-step plan for implementing this fix. Include: files to modify, root cause analysis, fix approach, and any regression risks.}
    ```
 
    **If `backend`:**
@@ -103,8 +107,19 @@ Goal: Create a spec file for a bug fix, saved to `docs/fixes/`.
 
    - [ ] {test case 1}
    - [ ] {test case 2}
+
+   ## Implementation Plan
+
+   {AI-generated step-by-step plan for implementing this fix. Include: files to modify, root cause analysis, fix approach, and any regression risks.}
    ```
 
-4. Confirm with the user: show the file path and summary, ask if any changes are needed.
+4. After writing the spec, **generate an Implementation Plan** by analyzing the bug and the existing codebase:
+   - Identify the root cause and affected code paths
+   - Break down the fix into ordered steps
+   - List files to modify
+   - Flag any regression risks or related areas to watch
+   - Fill in the `## Implementation Plan` section with the result
 
-5. Suggest: "Run `/feature load {filename}` to load this spec into current-feature.md and start fixing."
+5. Confirm with the user: show the file path and summary, ask if any changes are needed.
+
+6. Suggest: "Run `/feature load {filename}` to load this spec into current-feature.md and start fixing."
