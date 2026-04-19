@@ -12,7 +12,7 @@ Review the codebase for cleanup tasks:
 4. Check for stale TODO comments
 5. Find orphaned/unused files
 6. Check that context files match actual project state
-7. Check if the .env.production has the same variables (not always the same value) as the .env. If something is missing, tell me.
+7. Check if `.env.production` exists. If it does, verify it has the same variables (not necessarily same values) as `.env`. If something is missing, report it. If `.env.production` doesn't exist, skip this check.
 
 **Mode: $ARGUMENTS**
 

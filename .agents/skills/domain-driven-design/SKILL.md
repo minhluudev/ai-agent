@@ -24,7 +24,7 @@ description: Design and scaffold Laravel backend modules using Domain-Driven Des
 - `*UseCase` is orchestration-only — calls one Action, nothing else.
 - Domain is framework-independent — no Eloquent, no Facades.
 - Actions call only same-domain components: Entities, Repository contracts, Domain Services, Events.
-- Every DTO must extend `BaseDTO` (`Modules\Shared\DTOs\BaseDTO`). Every constructor parameter must have a `#[Rules([...])]` PHP attribute. `BaseDTO::rules()` derives the validation array from those attributes via reflection — subclasses must not override it. `fromRequest()` calls `static::validate($request)` (provided by `BaseDTO`) before constructing. Scaffold `BaseDTO` and the `Rules` attribute from `BaseDTO.template` and `RulesAttribute.template` if absent in the project.
+- Every DTO must extend `BaseDTO` (`Modules\Shared\DTOs\BaseDTO`). Every constructor parameter must have a `#[Rules([...])]` PHP attribute. `BaseDTO::rules()` derives the validation array from those attributes via reflection — subclasses must not override it. `fromRequest()` calls `static::validate($request)` (provided by `BaseDTO`) before constructing. Before scaffolding, check if `Modules/Shared/DTOs/BaseDTO.php` already exists. If absent, scaffold `BaseDTO` and the `Rules` attribute from `BaseDTO.template` and `RulesAttribute.template`.
 - Eloquent Models in Infrastructure for ORM mapping only — never as Domain Entities.
 - Providers in Infrastructure for bindings and wiring only — no business logic.
 - Repository interfaces in Domain; implementations in Infrastructure.
