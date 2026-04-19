@@ -1,0 +1,11 @@
+namespace Modules\{Module}\Domain\Entities;
+
+class {Entity}
+{
+    public function __construct(
+        public readonly string $id,
+    ) {}
+
+    // Add domain behaviors and invariant checks here.
+    // Example: public function rename(string $name): void { ... }
+}

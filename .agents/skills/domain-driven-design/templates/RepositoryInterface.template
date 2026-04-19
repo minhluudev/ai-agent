@@ -1,0 +1,12 @@
+namespace Modules\{Module}\Domain\Repositories;
+
+use Modules\{Module}\Domain\Entities\{Entity};
+
+interface {Entity}Repository
+{
+    public function find(string $id): {Entity};
+
+    public function save({Entity} $entity): void;
+
+    public function delete(string $id): void;
+}

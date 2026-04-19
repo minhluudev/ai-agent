@@ -1,0 +1,22 @@
+namespace Modules\{Module}\Application\DTOs;
+
+use Modules\Shared\Attributes\Rules;
+use Modules\Shared\DTOs\BaseDTO;
+use Illuminate\Http\Request;
+
+class {Name}DTO extends BaseDTO
+{
+    public function __construct(
+        #[Rules(['required', 'string', 'uuid'])]
+        public readonly string $id,
+    ) {}
+
+    public static function fromRequest(Request $request): self
+    {
+        $data = static::validate($request);
+
+        return new self(
+            id: (string) $data['id'],
+        );
+    }
+}

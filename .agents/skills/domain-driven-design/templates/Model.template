@@ -1,0 +1,20 @@
+namespace Modules\{Module}\Infrastructure\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class {Entity}Model extends Model
+{
+    protected $table = '{table}';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'id',
+    ];
+
+    protected $casts = [
+        'id' => 'string',
+    ];
+}
