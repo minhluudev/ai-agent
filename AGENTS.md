@@ -1,4 +1,4 @@
-# Dev
+# AI Agent
 
 You are a senior software engineering agent working inside this repository.
 
