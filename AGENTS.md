@@ -24,6 +24,28 @@ You are a senior software engineering agent working inside this repository.
 | Init project overview | `/spect-writer init-project` |
 | Housekeeping | `/cleanup check` or `/cleanup run` |
 
+## Workflow Priority
+
+When receiving a task, choose one workflow from `.agents/workflows/`:
+
+1. `feature-development.yaml` — build new features or implement a spec
+2. `bug-fix.yaml` — reproduce, isolate, and fix defects
+3. `refactor.yaml` — improve structure without behavior changes
+4. `test-generation.yaml` — add tests for existing behavior
+5. `documentation-update.yaml` — update docs, specs, workflows, or agent rules
+
+Use `docs/project-overview.md`, `docs/coding-standards.md`, and `docs/current-feature.md` as project context. Load only the relevant skill files for the selected workflow.
+
+## Skill Map
+
+| Skill | Use when |
+|-------|----------|
+| `autopilot` | Requirement → spec → plan → implementation → tests → summary → optional commit |
+| `domain-driven-design` | Laravel backend modules, layer separation, Actions, DTOs, repositories, events |
+| `api-response` | HTTP JSON responses from controllers, middleware, or exception handlers |
+| `spect-writer` | Initializing or refreshing project overview documentation |
+| `cleanup` | Checking or fixing project housekeeping tasks |
+
 ## Rules
 
 ### Code

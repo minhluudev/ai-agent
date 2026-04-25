@@ -1,0 +1,80 @@
+name: bug-fix
+version: 1.0
+purpose: Reproduce, diagnose, and fix a bug with the smallest safe change and regression coverage.
+
+trigger:
+  when:
+    - user reports a defect
+    - user runs /autopilot bugfix
+    - a failing test or runtime error needs investigation
+
+context:
+  source_of_truth:
+    - AGENTS.md
+    - docs/project-overview.md
+    - docs/coding-standards.md
+    - docs/current-feature.md
+  rule:
+    - Inspect only files related to the bug.
+    - Do not change code before root cause is clear.
+
+skills:
+  required:
+    - autopilot
+  conditional:
+    - domain-driven-design
+    - api-response
+
+steps:
+  - id: reproduce
+    name: Reproduce Bug
+    instructions:
+      - Identify expected behavior, actual behavior, and reproduction steps.
+      - Use logs, failing tests, or error messages when available.
+      - State assumptions when reproduction is incomplete.
+
+  - id: locate_root_cause
+    name: Locate Root Cause
+    instructions:
+      - Trace data flow from input to failure.
+      - Identify where behavior becomes wrong before changing code.
+      - Report root cause briefly before applying the fix.
+
+  - id: write_regression_test
+    name: Write Regression Test
+    instructions:
+      - Add a test that fails before the fix when practical.
+      - Name the test after the expected behavior.
+      - If a regression test is not practical, explain why.
+
+  - id: fix_bug
+    name: Fix Bug
+    instructions:
+      - Make the smallest safe change.
+      - Do not refactor unrelated code.
+      - Preserve public API shape unless the bug is the API shape itself.
+
+  - id: run_tests
+    name: Run Tests
+    instructions:
+      - Run the regression test first.
+      - Run related tests.
+      - Run the full suite when reasonable.
+
+  - id: fix_loop
+    name: Fix Loop
+    loop:
+      max_attempts: 3
+      until: tests_pass
+    instructions:
+      - Fix root cause based on failures.
+      - Stop after 3 failed attempts and summarize attempts.
+
+  - id: summarize
+    name: Summarize
+    format: |
+      ## Summary
+      ## Files Changed
+      ## Tests
+      ## Notes / Risks
+      ## Next Step

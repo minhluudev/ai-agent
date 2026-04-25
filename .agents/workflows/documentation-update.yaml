@@ -1,0 +1,67 @@
+name: documentation-update
+version: 1.0
+purpose: Update docs, specs, workflows, or agent rules while preserving existing conventions.
+
+trigger:
+  when:
+    - user asks to update documentation
+    - user asks to create or revise agent workflows
+    - user asks to review skills
+    - user runs /spect-writer init-project
+
+context:
+  source_of_truth:
+    - AGENTS.md
+    - docs/project-overview.md
+    - docs/coding-standards.md
+    - docs/current-feature.md
+    - .agents/skills
+  rule:
+    - Preserve the repo convention of `.agents/`.
+    - Do not create prompt templates unless the user explicitly asks.
+    - Do not create memory files; project context belongs in `docs/`.
+
+skills:
+  required:
+    - spect-writer
+  conditional:
+    - autopilot
+    - cleanup
+
+steps:
+  - id: inspect_existing_docs
+    name: Inspect Existing Docs
+    instructions:
+      - Read the requested source document.
+      - Read existing docs, skills, and workflow files that are directly relevant.
+      - Preserve repo naming conventions.
+
+  - id: map_gaps
+    name: Map Gaps
+    instructions:
+      - Compare the requested structure against existing files.
+      - Identify missing workflow or rule files.
+      - Avoid duplicating existing skill content unless a short reference is useful.
+
+  - id: update_docs
+    name: Update Docs
+    instructions:
+      - Add or edit focused documentation files.
+      - Prefer references over copying long skill instructions.
+      - Keep docs concise so agents do not waste context.
+
+  - id: validate
+    name: Validate
+    instructions:
+      - Check file list and diffs.
+      - Confirm no code or unrelated files were changed.
+      - Confirm instructions do not conflict with AGENTS.md.
+
+  - id: summarize
+    name: Summarize
+    format: |
+      ## Summary
+      ## Files Changed
+      ## Tests
+      ## Notes / Risks
+      ## Next Step

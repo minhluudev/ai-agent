@@ -1,0 +1,115 @@
+name: feature-development
+version: 1.0
+purpose: Build a new feature safely with scoped inspection, DDD boundaries, tests, and a review summary.
+
+trigger:
+  when:
+    - user asks to build a feature
+    - user asks to implement business logic
+    - user provides a reviewed spec
+    - user runs /autopilot run for a feature spec
+
+context:
+  source_of_truth:
+    - AGENTS.md
+    - docs/project-overview.md
+    - docs/coding-standards.md
+    - docs/current-feature.md
+  rule:
+    - Inspect only files related to the requirement.
+    - Do not load prompt templates by default.
+
+skills:
+  required:
+    - autopilot
+  conditional:
+    - domain-driven-design
+    - api-response
+
+gates:
+  plan_approval: required
+  commit_approval: required
+
+steps:
+  - id: understand_requirement
+    name: Understand Requirement
+    instructions:
+      - Read the user request and active spec, if any.
+      - Identify business goal, actor, inputs, outputs, side effects, and constraints.
+      - State assumptions only when they affect implementation or tests.
+
+  - id: inspect_context
+    name: Inspect Context
+    instructions:
+      - Read AGENTS.md and relevant docs context.
+      - Read only relevant source files.
+      - For backend work, load domain-driven-design.
+      - For HTTP responses, load api-response.
+
+  - id: create_plan
+    name: Create Implementation Plan
+    instructions:
+      - List files to create or modify and why.
+      - Follow dependency order: migration, domain, infrastructure, application, interface, tests.
+      - Keep the plan small and reviewable.
+      - Ask for plan approval unless the user already approved implementation.
+
+  - id: implement
+    name: Implement Feature
+    instructions:
+      - Keep controllers thin: validate, delegate, respond.
+      - Put business logic in Action classes.
+      - Keep UseCases for orchestration only.
+      - Use DTOs for structured input and output.
+      - Use repositories when persistence logic is non-trivial.
+      - Use ApiResponse for all HTTP JSON responses.
+      - Do not add dependencies without explicit approval.
+
+  - id: add_tests
+    name: Add Tests
+    instructions:
+      - Add or update tests for changed behavior.
+      - Cover success, validation failure, authorization failure when applicable, and important edge cases.
+      - Prefer unit tests for Domain Actions and integration/API tests for workflows.
+
+  - id: run_tests
+    name: Run Tests
+    commands:
+      laravel:
+        - php artisan test
+      javascript:
+        - npm test
+        - npm run lint
+      generic:
+        - run the smallest relevant test command first
+    instructions:
+      - Inspect project files to choose the correct command.
+      - Run the relevant test first, then broader tests when reasonable.
+
+  - id: fix_failures
+    name: Fix Failures
+    loop:
+      max_attempts: 3
+      until: tests_pass
+    instructions:
+      - Read the failure message.
+      - Fix the root cause, not only the symptom.
+      - Re-run relevant tests after each fix.
+      - Stop after 3 failed attempts and summarize what remains.
+
+  - id: final_review
+    name: Final Review
+    instructions:
+      - Review changed files.
+      - Confirm no unrelated files changed.
+      - Confirm no secrets, .env changes, or destructive database operations.
+      - Confirm the requirement and tests are satisfied.
+
+  - id: response
+    name: Response
+    format: |
+      ## Summary
+      ## Files Changed
+      ## Tests
+      ## Notes / Risks
+      ## Next Step
