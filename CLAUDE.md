@@ -1,14 +1,9 @@
 # Dev
 
-A developer knowledge hub for snippets, commands, prompts, notes, files, images, links and custom types.
+Read `AGENTS.md` for all rules, workflows, and conventions.
 
-## Context Files
+## Context
 
-Read the following to get the full context of the project:
-
-- @docs/project-overview.md
-- @docs/coding-standards.md
-- @docs/ai-interaction.md
-- @docs/current-feature.md
-
-**IMPORTANT:** Do not add Claude to any commit messages
+- @docs/current-feature.md — active feature tracker
+- @docs/project-overview.md — project spec (read when populated)
+- @docs/coding-standards.md — code conventions (read when populated)

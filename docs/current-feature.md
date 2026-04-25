@@ -1,23 +1,17 @@
 # Current Feature
 
-<!-- Feature Name -->
+## Active Spec
+
+<!-- Path to active spec file, e.g. docs/specs/category-crud.md -->
 
 ## Status
 
-<!-- Not Started|In Progress|Completed -->
+<!-- Not Started | Spec Written | In Progress | Complete -->
 
 Not Started
 
-## Goals
-
-<!-- Goals & requirements -->
-
-## Notes
-
-<!-- Any extra notes -->
-
 ## History
 
-<!-- Keep this updated. Earliest to latest -->
+<!-- Completed features/fixes. Earliest to latest. -->
 
 - Project setup and boilerplate cleanup

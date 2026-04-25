@@ -1,10 +1,11 @@
 # Context
 
-These are the context files referenced by the `CLAUDE.md` or `AGENTS.md` file. Only the four root-level files are loaded into the AI's memory on startup. The subfolders contain files that are fed to the AI on demand via commands like `/feature` and `/research`.
+## Root files (loaded on startup)
 
-- `project-overview.md` - Full project spec including features, data models, tech stack and UI/UX
-- `coding-standards.md` - Code conventions, patterns and rules for the AI to follow
-- `ai-interaction.md` - Workflow and communication guidelines for working with the AI
-- `current-feature.md` - Living document tracking the feature currently being worked on
-- `features/` - Feature spec files used with the `/feature` command
-- `fixes/` - Fix spec files for bugs and issues
+- `project-overview.md` — Project spec: tech stack, modules, domain
+- `coding-standards.md` — Code conventions and patterns
+- `current-feature.md` — Tracks active spec and completed history
+
+## Subfolders (loaded on demand)
+
+- `specs/` — Feature/fix spec files (created via `/autopilot spec`)

@@ -1,25 +1,23 @@
 ---
 name: spect-writer
-description: Write project and feature/fix specs - init project overview or create structured specs for backend/frontend work
-argument-hint: init-project|init-feature|init-fix
+description: Initialize project overview document
+argument-hint: init-project
 ---
 
 # Spect Writer
 
-Create and manage spec documents for the project, features, and fixes.
+Set up the project context document.
 
 ## Actions
 
 | Action | Description |
 |--------|-------------|
 | `init-project` | Describe the project and write to `docs/project-overview.md` |
-| `init-feature` | Create a spec for a new feature, saved to `docs/features/` |
-| `init-fix` | Create a spec for a new fix, saved to `docs/fixes/` |
+
+For feature/fix specs, use `/autopilot spec {requirement}` instead.
 
 ## Task
 
 Execute the requested action: $ARGUMENTS
 
 See [actions/](actions/) for detailed instructions.
-
-If no action provided, explain the available options and ask what the user wants to do.
