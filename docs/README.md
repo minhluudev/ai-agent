@@ -1,11 +1,9 @@
-# Context
+# Context Docs
 
-## Root files (loaded on startup)
+These files are core context and are loaded once by `AGENTS.md`:
 
-- `project-overview.md` — Project spec: tech stack, modules, domain
-- `coding-standards.md` — Code conventions and patterns
-- `current-feature.md` — Tracks active spec and completed history
+- `project-overview.md`: repository purpose and structure.
+- `coding-standards.md`: coding and agent conventions.
+- `current-feature.md`: active spec and completed history.
 
-## Subfolders (loaded on demand)
-
-- `specs/` — Feature/fix spec files (created via `/autopilot spec`)
+Do not load `specs/` unless an active or named spec is needed.

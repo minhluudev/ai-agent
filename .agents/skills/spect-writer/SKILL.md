@@ -1,23 +1,13 @@
 ---
 name: spect-writer
-description: Initialize project overview document
+description: Initialize or refresh docs/project-overview.md.
 argument-hint: init-project
 ---
 
 # Spect Writer
 
-Set up the project context document.
-
-## Actions
-
-| Action | Description |
-|--------|-------------|
-| `init-project` | Describe the project and write to `docs/project-overview.md` |
+Use `init-project` to capture project purpose, stack, goals, users, and modules in `docs/project-overview.md`.
 
 For feature/fix specs, use `/autopilot spec {requirement}` instead.
 
-## Task
-
-Execute the requested action: $ARGUMENTS
-
-See [actions/](actions/) for detailed instructions.
+Load `actions/init-project.md` only when executing `init-project`.

@@ -1,14 +1,13 @@
 namespace Modules\Shared\DTOs;
 
 use Modules\Shared\Attributes\Rules;
-use Illuminate\Http\Request;
 use ReflectionClass;
 
 abstract class BaseDTO
 {
     /**
-     * Derives validation rules from #[Rules] attributes on each constructor parameter.
-     * Subclasses do not need to override this method — just annotate every property.
+     * Derives validation rules from #[Rules] attributes on constructor parameters.
+     * Interfaces/FormRequests perform validation before constructing DTOs.
      */
     public static function rules(): array
     {
@@ -25,14 +24,5 @@ abstract class BaseDTO
         }
 
         return $rules;
-    }
-
-    /**
-     * Validates the request and returns a validated array.
-     * Call this in the subclass fromRequest() before constructing.
-     */
-    protected static function validate(Request $request): array
-    {
-        return $request->validate(static::rules());
     }
 }

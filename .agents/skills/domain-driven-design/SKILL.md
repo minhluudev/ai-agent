@@ -1,43 +1,37 @@
 ---
 name: domain-driven-design
-description: Design and scaffold Laravel backend modules using DDD with action-based architecture and event-driven communication
+description: Laravel backend module design using DDD layers, Actions, DTOs, repositories, and events.
 ---
 
 # Domain Driven Design
 
+Use for Laravel backend modules only.
+
 ## Workflow
 
-1. Understand the requirement — extract business behavior, trigger, state transition, side effects
-2. Identify the bounded context / module
-3. Define minimum slice: Entity, Action, DTO, Model, Provider, Repository, Domain Event, UseCase, EventHandler, Controller
-4. Communication: same domain → Action; cross-domain → Domain Event
-5. Generate code from `templates/` — read only the needed files, replace every placeholder
-6. Write tests: unit (Domain) + integration (Application)
-7. Run `php artisan test` — fix all failures
+1. Extract business behavior, trigger, state transition, and side effects.
+2. Identify the bounded context/module.
+3. Generate only the needed slice: Entity, Action, DTO, Model, Provider, Repository, Event, UseCase, Handler, Controller.
+4. Same module coordinates through its UseCase/Action; cross-module side effects use Domain Events.
+5. Read only needed templates from `templates/` and replace every placeholder.
+6. Test Domain with unit tests, Application with integration tests, HTTP with feature tests.
 
-## Key Rules
+## Hard Rules
 
-- Business logic in `*Action` only. `*UseCase` is orchestration-only.
-- Domain is framework-independent — no Eloquent, no Facades.
-- Every DTO extends `BaseDTO` with `#[Rules(...)]` attributes. Check `Modules/Shared/DTOs/BaseDTO.php` exists before scaffolding.
-- Eloquent Models in Infrastructure only — never as Domain Entities.
-- Cross-domain: emit Event, never inject another domain's Action/Repository.
-- **Controller responses must use the `api-response` skill** — never `response()->json()`.
+- Business logic lives in `Domain/Actions/*Action`.
+- Domain Actions accept primitives, Value Objects, or Domain objects; they must not import Application DTOs.
+- `Application/UseCases/*UseCase` accepts DTOs, calls one Action, and dispatches recorded Domain Events when needed.
+- Application DTOs are transport-neutral; build them from arrays, not HTTP Request objects.
+- Domain code must not depend on Eloquent, HTTP, Facades, or concrete infrastructure.
+- Eloquent models live only in `Infrastructure/Models` and are not Domain Entities.
+- Cross-module imports are limited to published Domain Events.
+- Controllers return via `api-response`; never `response()->json()`.
 
 ## References
 
-Read these before implementing:
-- [references/architecture.md](references/architecture.md) — layer responsibilities, naming, file placement, anti-patterns
-- [references/templates.md](references/templates.md) — template catalog
+- `references/architecture.md`: responsibilities, paths, tests, anti-patterns.
+- `references/templates.md`: template catalog.
 
-## Module Layout
+## Layout
 
-`Modules/` at project root. Never place domain code in `app/`.
-
-```
-Modules/{Module}/
-├── Domain/         (Entities, Actions, Events, Repositories)
-├── Application/    (UseCases, DTOs, EventHandlers)
-├── Infrastructure/ (Models, Providers, Repositories, Messaging, External)
-└── Interfaces/     (Controllers, Requests, Resources, Listeners)
-```
+`Modules/{Module}/Domain`, `Application`, `Infrastructure`, `Interfaces`. Never place module domain code under `app/`.

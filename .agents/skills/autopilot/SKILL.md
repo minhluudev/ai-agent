@@ -1,51 +1,26 @@
 ---
 name: autopilot
-description: Automated AI dev pipeline — from requirement to commit in one command
+description: Spec-first AI dev pipeline: requirement -> spec -> plan -> implementation -> tests -> optional commit.
 argument-hint: spec|run|bugfix|refactor|testgen|analyze|plan|implement|summary|commit
 ---
 
 # Autopilot
 
-Automated dev pipeline: requirement → spec → implement → test → commit.
+Execute `$ARGUMENTS`.
 
-## Standard Flow
+## Commands
 
-```
-/autopilot spec {requirement}     ← AI writes spec
-    ↓ user reviews
-/autopilot run                    ← AI implements end-to-end
-```
+- `spec`: create `docs/specs/{name}.md` from a requirement and set it active.
+- `run`: analyze -> plan -> approval -> implement -> test/fix -> summary -> commit approval.
+- `bugfix`: reproduce -> root cause -> regression test -> fix -> verify.
+- `refactor`: baseline -> plan -> change structure -> verify no behavior change.
+- `testgen`: inspect behavior -> add useful tests -> run relevant suite.
 
-## Task
+Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`. Read only the matching file in `actions/` when needed.
 
-Execute: $ARGUMENTS
+## Shared Rules
 
-### Workflows
-
-| Command | Use when |
-|---------|----------|
-| `spec` | Write spec from a requirement (start here) |
-| `run` | Implement active spec end-to-end |
-| `bugfix` | Fix a bug |
-| `refactor` | Improve structure without changing behavior |
-| `testgen` | Add test coverage |
-
-### Individual Actions
-
-| Action | Description |
-|--------|-------------|
-| `analyze` | Read spec, inspect context, analyze scope |
-| `plan` | Create implementation plan |
-| `implement` | Code + test + fix loop (max 3 attempts) |
-| `summary` | Change summary + production checklist |
-| `commit` | Commit (requires explicit approval) |
-
-See [actions/](actions/) for details. No argument → show options.
-
-## Conventions
-
-- Specs live in `docs/specs/` — source of truth for each feature/fix
-- Active spec tracked in @docs/current-feature.md
-- Use `domain-driven-design` skill for backend code
-- Use `api-response` skill for controller responses
-- All rules from AGENTS.md apply
+- Source of truth: active spec in `docs/current-feature.md` and files under `docs/specs/`.
+- Load `domain-driven-design` only for backend/module architecture.
+- Load `api-response` only for HTTP JSON responses.
+- Commit always requires explicit user approval.

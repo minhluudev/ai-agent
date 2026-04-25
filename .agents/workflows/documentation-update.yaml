@@ -1,67 +1,30 @@
 name: documentation-update
-version: 1.0
-purpose: Update docs, specs, workflows, or agent rules while preserving existing conventions.
+version: 1.2
+purpose: Update docs, workflows, skills, or agent rules without duplicating instructions.
 
 trigger:
   when:
-    - user asks to update documentation
-    - user asks to create or revise agent workflows
-    - user asks to review skills
+    - user asks to update docs
+    - user asks to revise workflows or skills
+    - user asks to optimize agent context/token use
     - user runs /spect-writer init-project
 
 context:
-  source_of_truth:
-    - AGENTS.md
-    - docs/project-overview.md
-    - docs/coding-standards.md
-    - docs/current-feature.md
-    - .agents/skills
-  rule:
-    - Preserve the repo convention of `.agents/`.
-    - Do not create prompt templates unless the user explicitly asks.
-    - Do not create memory files; project context belongs in `docs/`.
+  core_context: provided_by_AGENTS.md
+  load_on_demand_only_if_needed:
+    - only the workflow/skill/doc files being changed
+    - .agents/skills/spect-writer/SKILL.md for project overview initialization
+    - .agents/skills/cleanup/SKILL.md for housekeeping checks
 
-skills:
-  required:
-    - spect-writer
-  conditional:
-    - autopilot
-    - cleanup
+rules:
+  - Prefer references over copying long instructions.
+  - Keep workflow files as routing/gates; keep domain rules inside skills.
+  - Keep docs compact and useful as startup context.
+  - Do not create prompt templates or memory files unless requested.
 
 steps:
-  - id: inspect_existing_docs
-    name: Inspect Existing Docs
-    instructions:
-      - Read the requested source document.
-      - Read existing docs, skills, and workflow files that are directly relevant.
-      - Preserve repo naming conventions.
-
-  - id: map_gaps
-    name: Map Gaps
-    instructions:
-      - Compare the requested structure against existing files.
-      - Identify missing workflow or rule files.
-      - Avoid duplicating existing skill content unless a short reference is useful.
-
-  - id: update_docs
-    name: Update Docs
-    instructions:
-      - Add or edit focused documentation files.
-      - Prefer references over copying long skill instructions.
-      - Keep docs concise so agents do not waste context.
-
-  - id: validate
-    name: Validate
-    instructions:
-      - Check file list and diffs.
-      - Confirm no code or unrelated files were changed.
-      - Confirm instructions do not conflict with AGENTS.md.
-
-  - id: summarize
-    name: Summarize
-    format: |
-      ## Summary
-      ## Files Changed
-      ## Tests
-      ## Notes / Risks
-      ## Next Step
+  - inspect_relevant_context
+  - identify_duplicates_conflicts_and_gaps
+  - update_minimal_files
+  - validate_diff_and_instruction_consistency
+  - summarize_with_files_tests_risks_next_step

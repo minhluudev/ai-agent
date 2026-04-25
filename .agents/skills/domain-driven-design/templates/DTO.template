@@ -2,7 +2,6 @@ namespace Modules\{Module}\Application\DTOs;
 
 use Modules\Shared\Attributes\Rules;
 use Modules\Shared\DTOs\BaseDTO;
-use Illuminate\Http\Request;
 
 class {Name}DTO extends BaseDTO
 {
@@ -11,10 +10,8 @@ class {Name}DTO extends BaseDTO
         public readonly string $id,
     ) {}
 
-    public static function fromRequest(Request $request): self
+    public static function fromArray(array $data): self
     {
-        $data = static::validate($request);
-
         return new self(
             id: (string) $data['id'],
         );

@@ -1,6 +1,6 @@
 name: test-generation
-version: 1.0
-purpose: Add useful test coverage for existing behavior without changing production code unnecessarily.
+version: 1.2
+purpose: Add useful tests for existing behavior without unnecessary production changes.
 
 trigger:
   when:
@@ -9,55 +9,15 @@ trigger:
     - user runs /autopilot testgen
 
 context:
-  source_of_truth:
-    - AGENTS.md
-    - docs/project-overview.md
-    - docs/coding-standards.md
-    - docs/current-feature.md
-
-skills:
-  required:
-    - autopilot
-  conditional:
-    - domain-driven-design
-    - api-response
+  core_context: provided_by_AGENTS.md
+  load_on_demand_only_if_needed:
+    - target production code and existing tests
+    - .agents/skills/domain-driven-design/SKILL.md for backend layering
+    - .agents/skills/api-response/SKILL.md for HTTP response assertions
 
 steps:
-  - id: inspect_behavior
-    name: Inspect Behavior
-    instructions:
-      - Read the target production code and existing tests.
-      - Identify inputs, outputs, side effects, and expected behavior.
-      - Avoid testing implementation details.
-
-  - id: identify_test_cases
-    name: Identify Test Cases
-    instructions:
-      - List success cases.
-      - List failure cases.
-      - List edge cases.
-      - Prioritize behavior that carries business or regression risk.
-
-  - id: write_tests
-    name: Write Tests
-    instructions:
-      - Follow project testing conventions.
-      - Use clear behavior-oriented test names.
-      - Avoid over-mocking.
-      - Change production code only when required to make behavior testable, and explain why.
-
-  - id: run_tests
-    name: Run Tests
-    instructions:
-      - Run new tests first.
-      - Fix test issues up to 3 attempts.
-      - Run related or full suite when reasonable.
-
-  - id: summarize
-    name: Summarize
-    format: |
-      ## Summary
-      ## Files Changed
-      ## Tests
-      ## Notes / Risks
-      ## Next Step
+  - inspect_behavior: identify inputs, outputs, side effects, and contracts.
+  - choose_cases: prioritize success, failure, and edge cases by regression risk.
+  - write_tests: follow project conventions; avoid implementation-detail assertions.
+  - run_tests: new tests first, then related/full suite when reasonable.
+  - summarize: include tests added, gaps, commands run, next step.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# init.sh — Link .agents/skills into .claude and .codex
+# init.sh - Link .agents/skills into .claude/skills
 
 set -e
 

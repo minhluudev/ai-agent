@@ -12,6 +12,12 @@ class {Name}UseCase
 
     public function handle({Name}DTO $dto): {Entity}
     {
-        return $this->action->execute($dto);
+        $entity = $this->action->execute(
+            id: $dto->id,
+        );
+
+        // Dispatch domain events here if the Entity records them.
+
+        return $entity;
     }
 }

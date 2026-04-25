@@ -1,31 +1,22 @@
 namespace Modules\{Module}\Domain\Actions;
 
-use Illuminate\Events\Dispatcher;
-use Modules\{Module}\Application\DTOs\{Name}DTO;
 use Modules\{Module}\Domain\Entities\{Entity};
-use Modules\{Module}\Domain\Events\{EventName};
 use Modules\{Module}\Domain\Repositories\{Entity}Repository;
 
 class {Action}Action
 {
     public function __construct(
         private readonly {Entity}Repository $repository,
-        private readonly Dispatcher $events,
     ) {}
 
-    public function execute({Name}DTO $dto): {Entity}
+    public function execute(string $id): {Entity}
     {
-        $entity = $this->repository->find($dto->id);
+        $entity = $this->repository->find($id);
 
-        // Core business logic lives here.
-        // Call only components inside the same Domain from here.
+        // Core business rules and state transitions live here.
+        // Record domain events on the Entity when cross-module side effects are required.
 
         $this->repository->save($entity);
-
-        // Emit a Domain Event for cross-domain side effects.
-        $this->events->dispatch(new {EventName}(
-            entityId: $entity->id,
-        ));
 
         return $entity;
     }

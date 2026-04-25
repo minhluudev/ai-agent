@@ -15,5 +15,6 @@ Read only the template files needed for the current task. Replace every `{placeh
 | Domain event | `templates/DomainEvent.template` |
 | Event handler | `templates/EventHandler.template` |
 | Controller | `templates/Controller.template` |
+| Request | `templates/Request.template` |
 | Rules attribute | `templates/RulesAttribute.template` |
 | Base DTO | `templates/BaseDTO.template` |

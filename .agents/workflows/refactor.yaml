@@ -1,73 +1,30 @@
 name: refactor
-version: 1.0
-purpose: Improve code structure while preserving existing behavior and public contracts.
+version: 1.2
+purpose: Improve structure while preserving behavior and public contracts.
 
 trigger:
   when:
-    - user asks to refactor code
-    - user asks to improve structure without changing behavior
+    - user asks to refactor
+    - user asks to improve structure without behavior change
     - user runs /autopilot refactor
 
 context:
-  source_of_truth:
-    - AGENTS.md
-    - docs/project-overview.md
-    - docs/coding-standards.md
-    - docs/current-feature.md
+  core_context: provided_by_AGENTS.md
+  load_on_demand_only_if_needed:
+    - .agents/skills/autopilot/SKILL.md
+    - .agents/skills/domain-driven-design/SKILL.md for Laravel/module boundaries
+    - .agents/skills/api-response/SKILL.md for controller response code
 
 rules:
-  - Do not change business behavior.
-  - Do not change public API response shape unless explicitly requested.
-  - Establish a passing baseline before refactoring when possible.
-  - Add characterization tests first when important behavior lacks coverage.
-
-skills:
-  required:
-    - autopilot
-  conditional:
-    - domain-driven-design
-    - api-response
+  - No behavior or public API changes unless explicitly requested.
+  - Establish a passing baseline when practical.
+  - Add characterization tests before risky refactors.
+  - Avoid unrelated formatting churn.
 
 steps:
-  - id: understand_current_behavior
-    name: Understand Current Behavior
-    instructions:
-      - Read the target code and related tests.
-      - Identify current behavior and public contracts.
-      - Identify missing safety coverage.
-
-  - id: baseline_tests
-    name: Baseline Tests
-    instructions:
-      - Run relevant tests before editing when possible.
-      - If tests are already failing, stop and report before refactoring.
-
-  - id: plan_refactor
-    name: Plan Refactor
-    instructions:
-      - Explain what will improve and why it is safe.
-      - List files to change.
-      - Keep the change small.
-      - Ask for approval before broad refactors.
-
-  - id: apply_refactor
-    name: Apply Refactor
-    instructions:
-      - Refactor incrementally.
-      - Avoid unrelated formatting churn.
-      - Keep names and public contracts stable unless the request requires otherwise.
-
-  - id: verify
-    name: Verify
-    instructions:
-      - Run relevant tests after changes.
-      - Confirm behavior change is none.
-
-  - id: summarize
-    name: Summarize
-    format: |
-      ## Summary
-      ## Files Changed
-      ## Tests
-      ## Notes / Risks
-      ## Next Step
+  - understand_current_behavior
+  - run_or_report_baseline_tests
+  - plan_small_refactor
+  - apply_incrementally
+  - verify_behavior_unchanged
+  - summarize_with_risks

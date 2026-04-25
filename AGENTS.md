@@ -1,90 +1,61 @@
 # AI Agent
 
-You are a senior software engineering agent working inside this repository.
+Senior software engineering agent for this repository. Optimize for small, safe, reviewable changes and minimal context loading.
 
-## Workflow
+## Command Flow
 
-**Standard flow — user gives requirement, AI does the rest:**
+- `/autopilot spec {requirement}`: write a feature/fix spec in `docs/specs/` and update `docs/current-feature.md`.
+- `/autopilot run`: implement the active spec end-to-end.
+- `/autopilot bugfix {description}`: reproduce, isolate, fix, and test a defect.
+- `/autopilot refactor {target}`: improve structure without behavior changes.
+- `/autopilot testgen {target}`: add behavior-focused tests.
+- `/spect-writer init-project`: refresh `docs/project-overview.md`.
+- `/cleanup check|run`: inspect or fix housekeeping issues.
 
-```
-/autopilot spec {requirement}     ← AI writes spec
-    ↓ user reviews spec
-/autopilot run                    ← AI implements end-to-end
-```
+## Context Loading Contract
 
-**All commands:**
+Load once per task, in this order:
 
-| Task | Command |
-|------|---------|
-| Write spec from requirement | `/autopilot spec {requirement}` |
-| Implement spec end-to-end | `/autopilot run` |
-| Fix a bug | `/autopilot bugfix` |
-| Refactor code | `/autopilot refactor` |
-| Add test coverage | `/autopilot testgen` |
-| Init project overview | `/spect-writer init-project` |
-| Housekeeping | `/cleanup check` or `/cleanup run` |
+1. `AGENTS.md`
+2. `docs/project-overview.md`
+3. `docs/coding-standards.md`
+4. `docs/current-feature.md`
+5. exactly one workflow from `.agents/workflows/`
+6. only skill/action/reference/template files required by that workflow and task
 
-## Workflow Priority
+Do not reload a file already loaded. Do not read templates, references, specs, or unrelated source files unless the active workflow requires them.
 
-When receiving a task, choose one workflow from `.agents/workflows/`:
+## Workflow Selection
 
-1. `feature-development.yaml` — build new features or implement a spec
-2. `bug-fix.yaml` — reproduce, isolate, and fix defects
-3. `refactor.yaml` — improve structure without behavior changes
-4. `test-generation.yaml` — add tests for existing behavior
-5. `documentation-update.yaml` — update docs, specs, workflows, or agent rules
-
-Use `docs/project-overview.md`, `docs/coding-standards.md`, and `docs/current-feature.md` as project context. Load only the relevant skill files for the selected workflow.
+- `feature-development.yaml`: new feature or reviewed spec implementation.
+- `bug-fix.yaml`: failing behavior, runtime error, or defect report.
+- `refactor.yaml`: structure change with unchanged behavior.
+- `test-generation.yaml`: tests for existing behavior.
+- `documentation-update.yaml`: docs, workflows, skills, or agent rules.
 
 ## Skill Map
 
-| Skill | Use when |
-|-------|----------|
-| `autopilot` | Requirement → spec → plan → implementation → tests → summary → optional commit |
-| `domain-driven-design` | Laravel backend modules, layer separation, Actions, DTOs, repositories, events |
-| `api-response` | HTTP JSON responses from controllers, middleware, or exception handlers |
-| `spect-writer` | Initializing or refreshing project overview documentation |
-| `cleanup` | Checking or fixing project housekeeping tasks |
+- `autopilot`: spec, plan, implementation, tests, summary, commit proposal.
+- `domain-driven-design`: Laravel module boundaries, Actions, DTOs, repositories, events.
+- `api-response`: standardized HTTP JSON responses.
+- `spect-writer`: project overview initialization.
+- `cleanup`: housekeeping checks.
 
 ## Rules
 
-### Code
-
-- Keep controllers thin — validate, delegate, respond
-- Business logic belongs in Action classes only
-- Follow `domain-driven-design` skill for layer separation
-- Follow `api-response` skill for all HTTP responses
-- Prefer small, safe, reviewable changes
-- Do not scan unrelated files or change unrelated code
-- Do not add dependencies without explaining why
-
-### Safety
-
-- Never delete files unless explicitly requested
-- Never change `.env` files or expose secrets
-- Never add packages without approval
-- Never perform destructive DB operations without approval
-- Never change public API response shape unless required
-
-### Git
-
-- Ask before committing — never auto-commit
-- Conventional commits: `feat:`, `fix:`, `chore:`, `refactor:`, `test:`
-- One feature/fix per commit
-- Never put AI attribution in commits
-- Branch per feature/fix: `feature/{name}` or `fix/{name}`
-
-### When Stuck
-
-- After 2-3 failed attempts, stop and explain
-- Do not try random fixes
-- Ask for clarification if unclear
+- Controllers validate, delegate, and respond only.
+- Business logic lives in Domain `*Action` classes.
+- Use `ApiResponse`; do not call `response()->json()` in controllers.
+- Do not scan, reformat, or change unrelated files.
+- Do not add dependencies, change `.env`, alter public API shape, or run destructive DB operations without approval.
+- Ask before committing. Use conventional commits. Stage only files changed for the task. No AI attribution.
+- After 2-3 failed attempts, stop and report root cause, attempts, and blocker.
 
 ## Output Format
 
 Always end with:
 
-```
+```markdown
 ## Summary
 ## Files Changed
 ## Tests

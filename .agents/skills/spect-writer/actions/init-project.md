@@ -1,52 +1,32 @@
-# Init Project Action
+# Init Project
 
-Goal: Gather project information from the user and write it to `docs/project-overview.md`.
+Goal: write concise project context to `docs/project-overview.md`.
 
-## Steps
-
-1. Read `docs/project-overview.md` if it exists — if it has content, ask the user if they want to overwrite it.
-
-2. Ask the user for the following (use info from $ARGUMENTS if already provided):
-   - **Project name**
-   - **Short description** (1-2 sentences): What does this project do?
-   - **Tech stack**: Main languages, frameworks, databases, tools?
-   - **Main goals** of the project?
-   - **Target users** (if applicable)?
-   - **Main modules/sections** of the system?
-
-3. Write to `docs/project-overview.md` using this template:
+1. Use loaded `docs/project-overview.md`; read the file only if it is unavailable in context.
+2. If the file has meaningful content, ask before overwriting.
+3. Use `$ARGUMENTS` first; ask only for missing essentials: name, description, tech stack, goals, users, modules.
+4. Write this shape:
 
 ```markdown
 # Project Overview
 
 ## Description
-
-{short description}
+{1-2 sentences}
 
 ## Goals
-
-- {goal 1}
-- {goal 2}
+- {goal}
 
 ## Tech Stack
+- Frontend: {value}
+- Backend: {value}
+- Database: {value}
+- Other: {value}
 
-- **Frontend**: {framework, UI libraries}
-- **Backend**: {language, framework}
-- **Database**: {type}
-- **Other**: {tools, services}
-
-## Target Users
-
+## Users
 {target users}
 
 ## Modules
-
-- **{Module 1}**: {short description}
-- **{Module 2}**: {short description}
-
-## Notes
-
-{additional notes if any}
+- {Module}: {purpose}
 ```
 
-4. Confirm with the user: show the written content and ask if any changes are needed.
+5. Show the result and ask if changes are needed.
