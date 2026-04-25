@@ -23,8 +23,9 @@ Read all information provided in $ARGUMENTS carefully. Infer as much as possible
 Sections to derive or ask about:
 - **Type**: Infer from context (`feature` / `fix`). Ask only if truly unclear.
 - **Overview**: Derive from description. Confirm only if ambiguous.
+- **Goals**: Break requirement into concrete, verifiable outcomes.
 - **Input**: Identify from description. Ask if inputs are not mentioned.
-- **Output**: Derive expected results as test cases. Ask if success criteria are unclear.
+- **Output**: Derive expected results as Given/When/Then test cases. Ask if success criteria are unclear.
 - **Flow**: Reconstruct from description. Ask only if sequence/logic is not inferable.
 - **Usecases**: Derive from context. Ask if actors or scenarios are not mentioned.
 
@@ -44,6 +45,11 @@ Save to `docs/specs/{kebab-case-name}.md` using this format:
 ## Requirement
 
 {Original requirement from user — preserved verbatim}
+
+## Goals
+
+- {goal 1 — concrete, verifiable}
+- {goal 2}
 
 ## Input
 

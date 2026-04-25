@@ -11,7 +11,7 @@ Read spec and analyze the scope of changes needed.
    - If filename: look for `docs/specs/{name}.md`
    - If inline text: treat as a raw requirement — run the `spec` action first, then continue
    - If nothing: stop with error "No spec found. Run `/autopilot spec {requirement}` first."
-3. Parse the spec: extract Goals, API Endpoints, Database Changes, Business Rules, Implementation Plan
+3. Parse the spec: extract Goals, Input, Output, Flow, Usecases, Business Rules, Implementation Plan
 
 ### Step 2: Inspect Context
 

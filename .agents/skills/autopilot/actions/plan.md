@@ -4,7 +4,7 @@ Create a detailed implementation plan from the spec.
 
 ## Steps
 
-1. **Read spec** — Get the active spec from @docs/current-feature.md `## Active Spec`, then read the spec file. Use the Goals, API Endpoints, Database Changes, Business Rules, and existing Implementation Plan as input.
+1. **Read spec** — Get the active spec from @docs/current-feature.md `## Active Spec`, then read the spec file. Use the Goals, Input, Output, Flow, Usecases, Business Rules, and existing Implementation Plan as input.
 
 2. **Design architecture** — For each affected module:
    - Domain: Entities, Actions, Events, Repository interfaces
