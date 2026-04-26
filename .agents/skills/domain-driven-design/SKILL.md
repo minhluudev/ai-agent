@@ -24,7 +24,7 @@ Shared Laravel rules come from `docs/coding-standards.md`, especially:
 
 - Domain Actions accept primitives, Value Objects, or Domain objects; never Application DTOs.
 - Application DTOs are transport-neutral; build from arrays, not HTTP Request objects.
-- Every DTO constructor property must have `#[Rules([...])]` (see `templates/DTO.template` and `templates/RulesAttribute.template`).
+- Every DTO constructor property must have a `#[Rules([...])]` attribute. Required properties use `'required'`; optional properties use `'nullable'` or `'sometimes'`. DTOs without `#[Rules]` on every property are invalid. (see `templates/DTO.template` and `templates/RulesAttribute.template`)
 
 ## References
 
