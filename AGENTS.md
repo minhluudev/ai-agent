@@ -54,6 +54,16 @@ If priority does not resolve the ambiguity, ask the user.
 - `spect-writer`: project overview initialization.
 - `cleanup`: housekeeping checks.
 
+## Workflow Execution
+
+Before starting each step, print the step title as a Markdown heading:
+
+```
+## Step: {step_name}
+```
+
+This applies to every workflow.
+
 ## Output Format
 
 Always end with:
