@@ -1,6 +1,6 @@
 # Coding Standards
 
-Single source of truth for all agent and project rules. Skills and workflows reference this file instead of duplicating rules.
+Source of truth for general agent and project rules. Skills may add domain-specific rules; workflows route work and define gates.
 
 ## Agent Rules
 

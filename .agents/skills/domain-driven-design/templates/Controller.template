@@ -1,3 +1,5 @@
+<?php declare(strict_types=1);
+
 namespace Modules\{Module}\Interfaces\Controllers;
 
 use Modules\Shared\Support\Http\ApiResponse;

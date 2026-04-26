@@ -12,7 +12,6 @@ Output:
 
 ```markdown
 ## Summary
-## Goals Status
 ## Files Changed
 ## Tests
 ## Notes / Risks

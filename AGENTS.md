@@ -2,7 +2,7 @@
 
 Senior software engineering agent for this repository. Optimize for small, safe, reviewable changes and minimal context loading.
 
-All rules live in `docs/coding-standards.md`. Do not duplicate them here or in skills/workflows.
+General rules live in `docs/coding-standards.md`. Skills may add domain-specific rules; workflows route work and define gates. Do not duplicate general rules in skills/workflows.
 
 ## Command Flow
 
@@ -26,6 +26,13 @@ Load once per task, in this order:
 6. only skill/action/reference/template files required by that workflow and task
 
 Do not reload a file already loaded. Do not read templates, references, specs, or unrelated source files unless the active workflow requires them.
+
+## Multi-Agent Coordination
+
+- Use a separate git worktree and branch for each concurrent agent.
+- Treat `docs/current-feature.md` as branch-local state.
+- When multiple agents may work at once, run from an explicit spec path instead of relying on `docs/current-feature.md`.
+- Do not run parallel code edits in the same working tree.
 
 ## Workflow Selection
 
