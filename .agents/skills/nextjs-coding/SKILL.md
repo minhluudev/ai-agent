@@ -5,7 +5,7 @@ description: Build and refactor Next.js App Router features in the current repos
 
 # Next.js Coding
 
-Implement Next.js 16 App Router code. Treat the Target architecture below as a mandatory placement contract — not a loose example. Every new file must map to exactly one target layer before writing code.
+Implement Next.js App Router code for the target repository. Treat the Target architecture below as a mandatory placement contract — not a loose example. Every new file must map to exactly one target layer before writing code.
 
 ## Step 1 — Detect repo layout
 
@@ -14,7 +14,7 @@ Before writing any file:
 1. Check whether the App Router root is `src/app/` or `app/`.
 2. Set `<source-root>` = `src/` if using `src/app/`; otherwise `<source-root>` = repo root.
 3. Check which architecture anchors already exist: `modules/`, `shared/`, `services/`, `config/`, `types/`.
-4. Read `CLAUDE.md` or `AGENTS.md` for project-specific overrides.
+4. Use the already-loaded agent instructions for project-specific overrides; read root instruction files only if they are not already in context.
 5. Match the import alias and path style already used in nearby files.
 
 ## Step 2 — Map every file to a layer
@@ -76,8 +76,8 @@ src/
 
 ## Step 3 — Apply App Router conventions
 
-- `params` and `searchParams` are **async** (promises) in App Router `page.tsx` / `layout.tsx`.
-- `error.tsx` **must** be a Client Component (`'use client'`) and call `unstable_retry()`.
+- `params` is async in `page.tsx` and `layout.tsx`; `searchParams` is async in `page.tsx` only. Layouts do not receive `searchParams`.
+- `error.tsx` **must** be a Client Component (`'use client'`) and expose recovery through the Next.js error boundary retry prop (`reset` in the current API reference).
 - `loading.tsx` is a Suspense boundary fallback — keep it lightweight.
 - `page.tsx` composes hooks/components from `modules/<domain>` — no heavy business logic inline.
 
@@ -105,7 +105,7 @@ app/.../page.tsx
 - [ ] Every new file path is justified against the Target architecture table.
 - [ ] No duplicate architecture roots or ad-hoc top-level folders introduced.
 - [ ] Root `layout.tsx` defines `<html>` and `<body>`.
-- [ ] `error.tsx` is a Client Component with `unstable_retry()`.
+- [ ] `error.tsx` is a Client Component with the supported recovery prop for the installed Next.js version.
 - [ ] Business logic lives in `modules/` or `services/`, not in route files.
 - [ ] Shared code is genuinely cross-domain (used by ≥ 2 domains).
 - [ ] Run `npm run lint` if changes are substantial.

@@ -1,14 +1,14 @@
 # AI Agent
 
-Senior software engineering agent for this Next.js repository. Optimize for small, safe, reviewable changes and minimal context loading.
+Senior software engineering agent for this reusable Next.js agent-workflow kit. Optimize for small, safe, reviewable changes and minimal context loading.
 
-General rules live in `docs/coding-standards.md`. Skills may add domain-specific rules; workflows route work and define gates. Do not duplicate general rules in skills/workflows.
+Code rules live in `docs/coding-standards.md`. Skills add domain-specific rules; workflows route work and define gates. Keep each rule in one source and reference it elsewhere.
 
 ## Command Flow
 
 - `/spect-writer init-project`: refresh `docs/project-overview.md`.
 - `/autopilot spec {requirement}`: write a spec in `docs/specs/` and set it active.
-- `/autopilot run`: analyze -> plan -> implement -> test -> summary -> commit (with gates).
+- `/autopilot run`: analyze -> plan -> implement/test -> summary -> commit (with gates).
 - `/autopilot bugfix|refactor|testgen`: focused maintenance tasks.
 - `/cleanup check|run`: inspect or fix housekeeping issues.
 
@@ -28,6 +28,7 @@ Do not reload a file already loaded. Do not read templates, references, specs, o
 ## Multi-Agent Coordination
 
 - Use a separate git worktree and branch for each concurrent agent.
+- This instruction set is shared by Codex and Claude Code; keep provider-specific behavior in the provider adapter file only.
 - Treat `docs/current-feature.md` as branch-local state.
 - When multiple agents may work at once, run from an explicit spec path instead of relying on `docs/current-feature.md`.
 - Do not run parallel code edits in the same working tree.

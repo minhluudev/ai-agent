@@ -27,7 +27,9 @@ steps:
   - inspect: read relevant source and tests only.
   - plan: list files, order by dependency, include test plan.
   - implement: follow coding-standards.md rules and nextjs-coding skill layer map.
-  - test: run `npm run build`; fix all errors before proceeding.
+  - write_tests: write/update behavior tests for changed code following coding-standards.md Test Rules.
+  - run_tests: run new and related test files when a test runner is configured; fix failures before proceeding.
+  - build: run `npm run build`; fix all errors before proceeding.
   - fix_loop: fix root causes up to 3 attempts, then stop and report.
   - review: check diff, secrets, unrelated changes, API compatibility.
   - summarize: use AGENTS.md output format.

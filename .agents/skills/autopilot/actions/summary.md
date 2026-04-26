@@ -8,15 +8,7 @@
 
 Gather active spec goals plus `git status` and relevant `git diff`.
 
-Output:
-
-```markdown
-## Summary
-## Files Changed
-## Tests
-## Notes / Risks
-## Next Step
-```
+Output using the format defined in `AGENTS.md` Output Format section.
 
 Also check:
 - No unrelated files in the diff.

@@ -9,6 +9,6 @@
 
 1. Show files to stage and proposed conventional commit message.
 2. Ask: `Commit these changes? (yes/no/edit message)`.
-3. If approved, stage only files changed for this task; never `git add .`.
+3. If approved, stage and commit following `coding-standards.md` Commit Rules.
 4. Update `docs/current-feature.md` and active spec status only when the commit represents completed spec work.
 5. Report commit hash and branch.

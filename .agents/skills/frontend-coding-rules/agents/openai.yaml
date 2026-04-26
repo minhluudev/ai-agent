@@ -1,4 +1,4 @@
 interface:
   display_name: "Frontend Coding Rules"
   short_description: "UI priority rules for the current frontend"
-  default_prompt: "Apply frontend coding rules: use Ant Design first, then Tailwind CSS, then CSS Module, and always use react-component-generator when creating components."
+  default_prompt: "Apply frontend coding rules: use shadcn/ui first, then Tailwind CSS, then CSS Module, and always use react-component-generator when creating components."

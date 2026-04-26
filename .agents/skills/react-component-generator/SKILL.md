@@ -17,13 +17,11 @@ Generate component files that match current repository conventions.
 - Task is route/architecture work (`app/`, providers, config, module layout).
 - Request is a broad design-system overhaul spanning many areas.
 
-## Tech stack
+## Rules from other sources
 
-- Next.js `16.x` + React `19.x` + TypeScript strict
-- **shadcn/ui** first — use matching primitives before writing custom markup
-- **Tailwind CSS v4** second — utilities for layout, spacing, typography, color
-- **CSS Module** only when shadcn/ui + Tailwind are not enough
-- Path alias `@/*` available via `tsconfig.json`
+- **UI stack priority**: follows `frontend-coding-rules` (shadcn/ui → Tailwind → CSS Module).
+- **Client/Server boundary**: follows `coding-standards.md` Next.js section.
+- **File placement**: follows `nextjs-coding` target architecture.
 
 ---
 
@@ -71,7 +69,7 @@ Use the closest template from `templates/` as scaffolding — **never leave plac
 - `templates/controller.ts` → hook logic
 - `templates/style.module.css` → CSS module base
 
-Replace all placeholders: `ComponentName`, empty `IProps`, `// props` comments, empty destructures.
+Templates are minimal scaffolds. Add `IProps`, `useController(props)`, and returned controller values only when the target component actually needs them. Replace `ComponentName` and remove any unused controller call before finishing. If props + controller wiring is still unclear, read `references/props-controller-pattern.md`.
 
 ### Step 6 — Write to resolved location
 
@@ -83,15 +81,14 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 
 ### Step 7 — Self-check before finishing
 
-- [ ] No unused imports, variables, or hooks
-- [ ] No empty `IProps` interface (omit entirely if no props)
-- [ ] No empty destructure `const {} = useController()` — use returned values or omit until API is defined
-- [ ] `'use client'` present when component uses hooks, event handlers, or browser APIs
-- [ ] `index.tsx` only uses values returned by `controller.ts` (no direct state in view)
-- [ ] `style.module.css` only created if CSS classes are actually used
-- [ ] Component location matches `nextjs-coding` placement decision
-- [ ] shadcn/ui used before custom markup
-- [ ] Run `npm run lint` for substantial changes
+- [ ] No unused imports, variables, or hooks.
+- [ ] No empty `IProps` interface (omit entirely if no props).
+- [ ] No empty destructure `const {} = useController()` — use returned values or omit until API is defined.
+- [ ] `'use client'` present when component uses hooks, event handlers, or browser APIs.
+- [ ] `index.tsx` only uses values returned by `controller.ts` (no direct state in view).
+- [ ] `style.module.css` only created if CSS classes are actually used.
+- [ ] Component location matches `nextjs-coding` placement decision.
+- [ ] shadcn/ui used before custom markup.
 
 ---
 
@@ -103,7 +100,7 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 | Hook | always `useController` |
 | CSS class names | `camelCase` in `.module.css` |
 | File export | default export |
-| Component style | plain function (`function Foo`) preferred over `React.FC` unless existing file uses `FC` |
+| Component style | `FC` with `IProps` only when props exist |
 
 ## Props rules
 
@@ -112,34 +109,15 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 - Infer props from context: `"ProductCard displays a product"` → add `product: Product` to `IProps`.
 - Add `children?: React.ReactNode` only when children are actually rendered.
 
-## Client/Server boundary
-
-Add `"use client"` at the top of `index.tsx` when the component uses **any** of:
-- Event handlers (`onClick`, `onChange`, `onSubmit`, ...)
-- React hooks (`useState`, `useEffect`, `useRef`, ...)
-- shadcn/ui interactive components (Dialog, Dropdown, etc.)
-- Browser APIs
-
-If `index.tsx` imports `./controller` and the controller uses React hooks → `index.tsx` **must** be `'use client'`.
-
-Omit `"use client"` for purely static, data-display components with no interactivity.
-
 ## Controller rules
 
 - Create `controller.ts` only when logic should be separated from the view.
 - Signature without props: `export const useController = () => { ... }`
 - Signature with props: `export const useController = (props: IProps) => { ... }` — import `IProps` from `./index`.
+- When using props, pass the whole `props` object to `useController(props)` unless the existing component style clearly destructures earlier.
 - Import only the hooks actually used (`useState`, `useEffect`, ...).
 - Return the minimum API the view needs — nothing more.
 - Use `async/await` with a `loading` state for API calls.
-
-## Styling rules
-
-1. **shadcn/ui** — use primitives and compose with `className` overrides.
-2. **Tailwind** — utilities for spacing, color, layout, typography.
-3. **CSS Module** — only for animations, complex selectors, or pseudo-elements.
-4. Import CSS module as: `import styles from "./style.module.css"`, apply as `className={styles.foo}`.
-5. Do not create unused or redundant CSS classes.
 
 ## Import rules
 

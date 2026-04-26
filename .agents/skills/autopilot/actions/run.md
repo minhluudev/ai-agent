@@ -1,6 +1,6 @@
 # Run Action
 
-Pipeline: `analyze -> plan -> approval -> implement -> summary -> commit approval`.
+Pipeline: `analyze -> plan -> approval -> implement (including tests) -> summary -> commit approval`.
 
 ## Gates
 
@@ -10,7 +10,7 @@ Pipeline: `analyze -> plan -> approval -> implement -> summary -> commit approva
 ## Stop Conditions
 
 - No active spec and no requirement provided.
-- `npm run build` still fails after 3 root-cause fix attempts.
+- Tests or `npm run build` still fail after 3 root-cause fix attempts.
 - Git diff includes unrelated or unsafe changes.
 
 ## Resume

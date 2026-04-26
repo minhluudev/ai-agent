@@ -24,7 +24,7 @@ If no argument or argument is "check":
 If the argument is "run" or "fix":
 
 - First, report all findings with numbered items
-- Then ask: "Which items would you like me to fix? (enter numbers like 1,3,5 or 'all' or 'none')"
-- Wait for user response before making any changes
+- If the user already explicitly asked to fix all findings, proceed; otherwise ask: "Which items would you like me to fix? (enter numbers like 1,3,5 or 'all' or 'none')"
+- Wait for user response before making changes unless the user already approved fixing all findings
 - Only fix the items the user specifies
 - Report what you changed

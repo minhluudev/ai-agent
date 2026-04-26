@@ -2,7 +2,8 @@
 
 1. Capture expected behavior, actual behavior, and reproduction trigger.
 2. Inspect only related files and identify the first wrong behavior before editing.
-3. Add a regression test when practical.
+3. Write a regression test that reproduces the bug when practical (should fail before fix).
 4. Apply the smallest root-cause fix; avoid unrelated refactors.
-5. Run `npm run build` and relevant tests; broaden when reasonable.
-6. Summarize root cause, fix, files, tests, risk, and next step.
+5. Run the regression test and related tests when a test runner is configured; confirm the fix passes.
+6. Run `npm run build`; broaden test scope when reasonable.
+7. Summarize root cause, fix, files, tests, risk, and next step.

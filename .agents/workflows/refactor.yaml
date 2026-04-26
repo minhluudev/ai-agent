@@ -16,13 +16,14 @@ context:
 
 refactor_rules:
   - No behavior or public API changes unless explicitly requested.
-  - Establish a passing baseline (`npm run build`) before starting.
+  - Establish a passing baseline (`npm run build` plus existing related tests when a test runner is configured) before starting.
   - Add characterization tests before risky refactors.
 
 steps:
   - understand_current_behavior
-  - run_or_report_baseline_build
+  - run_baseline: run existing related tests when a test runner is configured and `npm run build` to establish a baseline. If failing, stop and report.
   - plan_small_refactor
   - apply_incrementally
-  - verify_behavior_unchanged
+  - run_tests: run existing related tests when a test runner is configured to verify no behavior change.
+  - build: run `npm run build` to verify no compile errors.
   - summarize_with_risks

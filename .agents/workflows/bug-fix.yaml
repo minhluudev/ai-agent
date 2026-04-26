@@ -5,21 +5,22 @@ purpose: Reproduce, diagnose, fix, and test a defect with the smallest safe chan
 trigger:
   when:
     - user reports a defect
-    - user runs /spect-writer init-fix
+    - user runs /autopilot bugfix
     - a failing build or runtime error needs investigation
 
 context:
   core_context: provided_by_AGENTS.md
   rules: docs/coding-standards.md
   load_on_demand_only_if_needed:
-    - .agents/skills/feature/SKILL.md
+    - .agents/skills/autopilot/SKILL.md
     - .agents/skills/nextjs-coding/SKILL.md for App Router issues
   rule: Do not edit before root cause is clear.
 
 steps:
   - reproduce: capture expected behavior, actual behavior, and trigger.
   - isolate: trace data flow to the first wrong behavior.
-  - test: add a regression test when practical.
+  - write_test: add a regression test that fails before the fix when practical.
   - fix: make the smallest root-cause change; no drive-by refactor.
-  - verify: run `npm run build` and related tests; confirm fix is isolated.
+  - run_tests: run regression and related tests when a test runner is configured; confirm fix passes.
+  - build: run `npm run build`; confirm fix is isolated.
   - summarize: include root cause, fix, tests, residual risk, next step.

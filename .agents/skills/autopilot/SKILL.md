@@ -11,7 +11,7 @@ Execute `$ARGUMENTS`.
 ## Commands
 
 - `spec`: create `docs/specs/{name}.md` from a requirement and set it active.
-- `run`: analyze -> plan -> approval -> implement -> test/fix -> summary -> commit approval.
+- `run`: analyze -> plan -> approval -> implement (including tests/fixes) -> summary -> commit approval.
 - `bugfix`: reproduce -> root cause -> regression test -> fix -> verify.
 - `refactor`: baseline -> plan -> change structure -> verify no behavior change.
 - `testgen`: inspect behavior -> add useful tests -> run relevant suite.
