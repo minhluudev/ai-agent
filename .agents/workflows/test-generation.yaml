@@ -1,0 +1,22 @@
+name: test-generation
+version: 1.0
+purpose: Add useful tests for existing behavior without unnecessary production changes.
+
+trigger:
+  when:
+    - user asks to add tests
+    - user asks to improve coverage
+
+context:
+  core_context: provided_by_AGENTS.md
+  rules: docs/coding-standards.md
+  load_on_demand_only_if_needed:
+    - target production code and existing tests
+    - .agents/skills/nextjs-coding/SKILL.md for App Router layer context
+
+steps:
+  - inspect_behavior: identify inputs, outputs, side effects, and contracts.
+  - choose_cases: prioritize success, failure, and edge cases by regression risk.
+  - write_tests: follow docs/coding-standards.md test rules.
+  - run_tests: new tests first, then related/full suite when reasonable.
+  - summarize: include tests added, gaps, commands run, next step.

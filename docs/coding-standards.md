@@ -1,5 +1,23 @@
 # Coding Standards
 
+Source of truth for general agent and project rules. Skills may add domain-specific rules; workflows route work and define gates.
+
+## Agent Rules
+
+- Prefer the smallest change that satisfies the requirement.
+- Read only relevant files; avoid repo-wide scans unless the task is cleanup or architecture review.
+- Keep instructions in one place: workflows route work, skills define domain rules, templates provide code skeletons.
+- Preserve public contracts unless the user explicitly asks for a breaking change.
+- Do not scan, reformat, or change unrelated files.
+- Do not add dependencies, change `.env`, alter public API shape, or run destructive DB operations without approval.
+
+## Commit Rules
+
+- Ask before committing. Use conventional commits (feat:, fix:, chore:, etc.).
+- Stage only files changed for the task; never `git add .`.
+- No AI attribution in commits.
+- Run `npm run build` before committing; fix all errors first.
+
 ## TypeScript
 
 - Strict mode enabled
@@ -46,6 +64,7 @@ Example v4 configuration:
 @theme {
   --color-primary: oklch(50% 0.2 250);
 }
+```
 
 ## File Organization
 
@@ -88,10 +107,18 @@ Example v4 configuration:
 - Use try/catch in Server Actions
 - Return `{ success, data, error }` pattern from actions
 - Display user-friendly error messages via toast
+- After 2-3 failed attempts at the same fix, stop and report root cause, attempts, and blocker.
+
+## Test Rules
+
+- Tests cover behavior, not implementation details.
+- Unit: isolated logic with no DB or HTTP.
+- Integration: real test DB, full action/service flow.
+- Feature/E2E: user-facing workflows and HTTP responses.
+- Prioritize tests by business/regression risk, not coverage percentage.
 
 ## Code Quality
 
 - No commented-out code unless specified
 - No unused imports or variables
 - Keep functions under 50 lines when possible
-```

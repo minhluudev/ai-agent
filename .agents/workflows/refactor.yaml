@@ -1,0 +1,28 @@
+name: refactor
+version: 1.0
+purpose: Improve structure while preserving behavior and public contracts.
+
+trigger:
+  when:
+    - user asks to refactor
+    - user asks to improve structure without behavior change
+
+context:
+  core_context: provided_by_AGENTS.md
+  rules: docs/coding-standards.md
+  load_on_demand_only_if_needed:
+    - .agents/skills/nextjs-coding/SKILL.md for App Router layer boundaries
+    - .agents/skills/react-component-generator/SKILL.md for component restructuring
+
+refactor_rules:
+  - No behavior or public API changes unless explicitly requested.
+  - Establish a passing baseline (`npm run build`) before starting.
+  - Add characterization tests before risky refactors.
+
+steps:
+  - understand_current_behavior
+  - run_or_report_baseline_build
+  - plan_small_refactor
+  - apply_incrementally
+  - verify_behavior_unchanged
+  - summarize_with_risks

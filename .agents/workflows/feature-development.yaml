@@ -1,0 +1,33 @@
+name: feature-development
+version: 1.0
+purpose: Implement a reviewed feature spec with scoped inspection, Next.js architecture boundaries, tests, and explicit gates.
+
+trigger:
+  when:
+    - user asks to build a feature
+    - user provides or approves a spec
+    - user runs /autopilot run
+
+context:
+  core_context: provided_by_AGENTS.md
+  rules: docs/coding-standards.md
+  load_on_demand_only_if_needed:
+    - active spec from docs/current-feature.md
+    - .agents/skills/autopilot/SKILL.md
+    - .agents/skills/nextjs-coding/SKILL.md for App Router architecture
+    - .agents/skills/react-component-generator/SKILL.md for component generation
+  rule: Inspect only files related to the spec.
+
+gates:
+  plan_approval: required unless user already approved implementation
+  commit_approval: always_required
+
+steps:
+  - understand: identify goal, actor, input, output, side effects, constraints.
+  - inspect: read relevant source and tests only.
+  - plan: list files, order by dependency, include test plan.
+  - implement: follow coding-standards.md rules and nextjs-coding skill layer map.
+  - test: run `npm run build`; fix all errors before proceeding.
+  - fix_loop: fix root causes up to 3 attempts, then stop and report.
+  - review: check diff, secrets, unrelated changes, API compatibility.
+  - summarize: use AGENTS.md output format.

@@ -1,0 +1,31 @@
+name: documentation-update
+version: 1.0
+purpose: Update docs, workflows, skills, or agent rules without duplicating instructions.
+
+trigger:
+  when:
+    - user asks to update docs
+    - user asks to revise workflows or skills
+    - user asks to optimize agent context/token use
+    - user runs /spect-writer init-project
+
+context:
+  core_context: provided_by_AGENTS.md
+  rules: docs/coding-standards.md
+  load_on_demand_only_if_needed:
+    - only the workflow/skill/doc files being changed
+    - .agents/skills/spect-writer/SKILL.md for project overview initialization
+    - .agents/skills/cleanup/SKILL.md for housekeeping checks
+
+doc_rules:
+  - Prefer references over copying long instructions.
+  - Keep workflow files as routing/gates; keep domain rules inside skills.
+  - Keep docs compact and useful as startup context.
+  - Do not create prompt templates or memory files unless requested.
+
+steps:
+  - inspect_relevant_context
+  - identify_duplicates_conflicts_and_gaps
+  - update_minimal_files
+  - validate_diff_and_instruction_consistency
+  - summarize_with_files_tests_risks_next_step
