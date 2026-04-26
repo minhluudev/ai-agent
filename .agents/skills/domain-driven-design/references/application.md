@@ -15,5 +15,6 @@ Contains: UseCases, DTOs, EventHandlers.
 
 ## Testing
 
+- DTO unit tests: verify `fromArray()` mapping, `rules()` output, and `#[Rules]` attribute coverage for every constructor property.
 - Integration tests: UseCases with real test DB/repositories and event dispatch assertions.
 - EventHandlers: run twice with same event and assert idempotent outcome.

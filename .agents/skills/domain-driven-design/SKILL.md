@@ -21,6 +21,7 @@ Use for Laravel backend modules only. General code rules are in `docs/coding-sta
 - Domain Actions accept primitives, Value Objects, or Domain objects; they must not import Application DTOs.
 - `Application/UseCases/*UseCase` accepts DTOs, calls one Action, and dispatches recorded Domain Events when needed.
 - Application DTOs are transport-neutral; build them from arrays, not HTTP Request objects.
+- Every DTO constructor property must have a `#[Rules([...])]` attribute for validation. DTOs without Rules attributes are invalid. See `templates/DTO.template` and `templates/RulesAttribute.template`.
 
 ## References
 

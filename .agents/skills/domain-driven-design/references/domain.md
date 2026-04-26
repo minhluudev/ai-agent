@@ -17,4 +17,5 @@ Contains: Entities, Actions, Events, Repository contracts, Domain Services, Valu
 ## Testing
 
 - Unit tests: Domain Actions, Entities, Services.
+- Entity unit tests: verify invariant checks, state transitions, and domain event recording.
 - Mock repository contracts; no DB or framework dependencies.
