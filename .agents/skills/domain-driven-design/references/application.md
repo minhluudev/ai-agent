@@ -1,0 +1,19 @@
+# Application Layer
+
+Contains: UseCases, DTOs, EventHandlers.
+
+## Responsibilities
+
+- `UseCase`: accepts Application DTO, calls one Action, returns result, dispatches recorded Domain Events at the Application boundary.
+- `DTO`: transport-neutral input/output shape built from arrays or primitives; no Request dependency.
+- `EventHandler`: consumes events idempotently and calls its own module UseCase.
+
+## Constraints
+
+- No business rules, Eloquent, or HTTP objects.
+- UseCases do not call Repository directly.
+
+## Testing
+
+- Integration tests: UseCases with real test DB/repositories and event dispatch assertions.
+- EventHandlers: run twice with same event and assert idempotent outcome.

@@ -20,7 +20,9 @@ Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`. Read only
 
 ## Shared Rules
 
-- Source of truth: active spec in `docs/current-feature.md` and files under `docs/specs/`.
+- All code rules are in `docs/coding-standards.md`. Do not duplicate them in actions.
+- Source of truth for current work: active spec in `docs/current-feature.md` and files under `docs/specs/`.
 - Load `domain-driven-design` only for backend/module architecture.
 - Load `api-response` only for HTTP JSON responses.
 - Commit always requires explicit user approval.
+- Each advanced action has a Prerequisites section — check it before executing steps.

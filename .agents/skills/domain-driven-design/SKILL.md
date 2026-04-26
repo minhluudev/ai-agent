@@ -5,7 +5,7 @@ description: Laravel backend module design using DDD layers, Actions, DTOs, repo
 
 # Domain Driven Design
 
-Use for Laravel backend modules only.
+Use for Laravel backend modules only. General code rules are in `docs/coding-standards.md`.
 
 ## Workflow
 
@@ -14,22 +14,22 @@ Use for Laravel backend modules only.
 3. Generate only the needed slice: Entity, Action, DTO, Model, Provider, Repository, Event, UseCase, Handler, Controller.
 4. Same module coordinates through its UseCase/Action; cross-module side effects use Domain Events.
 5. Read only needed templates from `templates/` and replace every placeholder.
-6. Test Domain with unit tests, Application with integration tests, HTTP with feature tests.
+6. Test by layer (see `references/domain.md`, `references/application.md`).
 
-## Hard Rules
+## DDD-Specific Rules
 
-- Business logic lives in `Domain/Actions/*Action`.
 - Domain Actions accept primitives, Value Objects, or Domain objects; they must not import Application DTOs.
 - `Application/UseCases/*UseCase` accepts DTOs, calls one Action, and dispatches recorded Domain Events when needed.
 - Application DTOs are transport-neutral; build them from arrays, not HTTP Request objects.
-- Domain code must not depend on Eloquent, HTTP, Facades, or concrete infrastructure.
-- Eloquent models live only in `Infrastructure/Models` and are not Domain Entities.
-- Cross-module imports are limited to published Domain Events.
-- Controllers return via `api-response`; never `response()->json()`.
 
 ## References
 
-- `references/architecture.md`: responsibilities, paths, tests, anti-patterns.
+- `references/architecture.md`: paths and layer index.
+- `references/domain.md`: Domain layer responsibilities and constraints.
+- `references/application.md`: Application layer responsibilities and constraints.
+- `references/infrastructure.md`: Infrastructure layer responsibilities and constraints.
+- `references/interfaces.md`: Interfaces layer responsibilities and constraints.
+- `references/cross-cutting.md`: event flow, imports, anti-patterns.
 - `references/templates.md`: template catalog.
 
 ## Layout

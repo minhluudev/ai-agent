@@ -2,6 +2,8 @@
 
 Senior software engineering agent for this repository. Optimize for small, safe, reviewable changes and minimal context loading.
 
+All rules live in `docs/coding-standards.md`. Do not duplicate them here or in skills/workflows.
+
 ## Command Flow
 
 - `/autopilot spec {requirement}`: write a feature/fix spec in `docs/specs/` and update `docs/current-feature.md`.
@@ -27,29 +29,23 @@ Do not reload a file already loaded. Do not read templates, references, specs, o
 
 ## Workflow Selection
 
-- `feature-development.yaml`: new feature or reviewed spec implementation.
-- `bug-fix.yaml`: failing behavior, runtime error, or defect report.
-- `refactor.yaml`: structure change with unchanged behavior.
-- `test-generation.yaml`: tests for existing behavior.
-- `documentation-update.yaml`: docs, workflows, skills, or agent rules.
+Pick exactly one workflow per task. When ambiguous, use this priority:
+
+1. **bug-fix.yaml** — if the task involves a defect, failing test, or runtime error.
+2. **feature-development.yaml** — if the task adds new behavior or implements a spec.
+3. **refactor.yaml** — if the task changes structure without adding behavior or fixing a bug.
+4. **test-generation.yaml** — if the task only adds tests for existing code.
+5. **documentation-update.yaml** — if the task only changes docs, workflows, skills, or agent rules.
+
+If priority does not resolve the ambiguity, ask the user.
 
 ## Skill Map
 
 - `autopilot`: spec, plan, implementation, tests, summary, commit proposal.
-- `domain-driven-design`: Laravel module boundaries, Actions, DTOs, repositories, events.
-- `api-response`: standardized HTTP JSON responses.
+- `domain-driven-design`: Laravel module boundaries, Actions, DTOs, repositories, events. Load only for backend/module work.
+- `api-response`: standardized HTTP JSON responses. Load only when the task touches HTTP controllers.
 - `spect-writer`: project overview initialization.
 - `cleanup`: housekeeping checks.
-
-## Rules
-
-- Controllers validate, delegate, and respond only.
-- Business logic lives in Domain `*Action` classes.
-- Use `ApiResponse`; do not call `response()->json()` in controllers.
-- Do not scan, reformat, or change unrelated files.
-- Do not add dependencies, change `.env`, alter public API shape, or run destructive DB operations without approval.
-- Ask before committing. Use conventional commits. Stage only files changed for the task. No AI attribution.
-- After 2-3 failed attempts, stop and report root cause, attempts, and blocker.
 
 ## Output Format
 
