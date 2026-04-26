@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Spec-first AI dev pipeline: requirement -> spec -> plan -> implementation -> tests -> optional commit.
+description: "Spec-first AI dev pipeline: requirement -> spec -> plan -> implementation -> tests -> optional commit."
 argument-hint: spec|run|bugfix|refactor|testgen|analyze|plan|implement|summary|commit
 ---
 
