@@ -1,5 +1,5 @@
 name: code-review
-version: 1.0
+version: 1.1
 purpose: Structured review of a diff, file, or PR across correctness, readability, maintainability, performance, security, error handling, and convention.
 
 trigger:
@@ -21,8 +21,8 @@ gates:
   findings_confirmed: present findings and wait for user acknowledgement before suggesting fixes
 
 steps:
-  - scope: identify what is being reviewed (diff, file path, PR description, or inline snippet).
-  - load: read the target file(s) or diff. If a PR, read changed files only.
-  - review: apply all 7 dimensions from code-review SKILL.md; always run Correctness and Security.
-  - report: output findings using the [DIMENSION] SEVERITY format defined in the skill.
-  - summarize: print Review Summary with severity counts and overall verdict.
+  - scope_review_target_diff_file_or_pr
+  - load_only_target_files_or_diff
+  - review_all_7_dimensions_correctness_and_security_required
+  - report_findings_in_DIMENSION_SEVERITY_format
+  - summarize_with_severity_counts_and_verdict

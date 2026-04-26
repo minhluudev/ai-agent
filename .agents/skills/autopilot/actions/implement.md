@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Active spec must exist in `docs/current-feature.md`. If missing, run `spec` first or ask the user.
-- An approved Implement Plan must exist. If missing, run `plan` first or ask the user.
+- Approved Implement Plan is required when the active workflow requires it. If missing, run `plan` first or ask the user.
 
 ## Steps
 

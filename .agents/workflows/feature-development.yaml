@@ -1,6 +1,6 @@
 name: feature-development
-version: 1.3
-purpose: Implement a reviewed feature spec with scoped inspection, DDD boundaries, tests, and explicit gates.
+version: 1.4
+purpose: Implement a reviewed feature spec with scoped inspection, tests, and explicit gates.
 
 trigger:
   when:
@@ -16,18 +16,21 @@ context:
     - .agents/skills/autopilot/SKILL.md
     - .agents/skills/domain-driven-design/SKILL.md for Laravel/backend modules
     - .agents/skills/api-response/SKILL.md for HTTP JSON
-  rule: Inspect only files related to the spec.
+  rule: inspect only files related to the spec
 
 gates:
-  plan_approval: required unless user already approved implementation
+  ownership: GATE.WORKFLOW_OWNERSHIP
+  plan_approval: required unless already approved
   commit_approval: always_required
 
 steps:
-  - understand: identify goal, actor, input, output, side effects, constraints.
-  - inspect: read relevant source and tests only.
-  - plan: list files, order by dependency, include test plan.
-  - implement: follow coding-standards.md rules.
-  - test: add/update behavior tests and run smallest relevant command first.
-  - fix_loop: fix root causes up to 3 attempts, then stop and report.
-  - review: check diff, secrets, unrelated changes, API compatibility.
-  - summarize: use AGENTS.md output format.
+  - understand
+  - inspect
+  - plan
+  - gate_plan_once_if_required
+  - implement
+  - test
+  - fix_loop_max_3_then_stop_and_report
+  - review_diff_scope_and_risks
+  - gate_commit_once_if_required
+  - summarize_with_AGENTS_output_format

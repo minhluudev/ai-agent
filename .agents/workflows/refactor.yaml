@@ -1,5 +1,5 @@
 name: refactor
-version: 1.3
+version: 1.4
 purpose: Improve structure while preserving behavior and public contracts.
 
 trigger:
@@ -17,7 +17,7 @@ context:
     - .agents/skills/api-response/SKILL.md for controller response code
 
 refactor_rules:
-  - No behavior or public API changes unless explicitly requested.
+  - follow AGENT.CONTRACT_STABILITY; no behavior or public API changes unless requested.
   - Establish a passing baseline when practical.
   - Add characterization tests before risky refactors.
 
@@ -27,4 +27,4 @@ steps:
   - plan_small_refactor
   - apply_incrementally
   - verify_behavior_unchanged
-  - summarize_with_risks
+  - summarize_with_AGENTS_output_format

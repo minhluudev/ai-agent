@@ -1,5 +1,5 @@
 name: test-generation
-version: 1.3
+version: 1.4
 purpose: Add useful tests for existing behavior without unnecessary production changes.
 
 trigger:
@@ -18,8 +18,8 @@ context:
     - .agents/skills/api-response/SKILL.md for HTTP response assertions
 
 steps:
-  - inspect_behavior: identify inputs, outputs, side effects, and contracts.
-  - choose_cases: prioritize success, failure, and edge cases by regression risk.
-  - write_tests: follow docs/coding-standards.md test rules.
-  - run_tests: new tests first, then related/full suite when reasonable.
-  - summarize: include tests added, gaps, commands run, next step.
+  - inspect_behavior_inputs_outputs_side_effects_contracts
+  - choose_cases_by_regression_risk_success_failure_edge
+  - write_behavior_focused_tests_following_test_rules
+  - run_new_tests_then_related_or_full_suite
+  - summarize_with_AGENTS_output_format

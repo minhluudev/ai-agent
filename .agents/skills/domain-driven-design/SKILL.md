@@ -5,34 +5,38 @@ description: Laravel backend module design using DDD layers, Actions, DTOs, repo
 
 # Domain Driven Design
 
-Use for Laravel backend modules only. General code rules are in `docs/coding-standards.md`.
+Use for Laravel backend modules only.
+Shared Laravel rules come from `docs/coding-standards.md`, especially:
+`LARAVEL.CTRL_THIN`, `LARAVEL.DOMAIN_ACTION_OWNS_RULES`, `LARAVEL.USECASE_ONE_ACTION`,
+`LARAVEL.API_RESPONSE_ONLY`, `LARAVEL.CROSS_DOMAIN_EVENTS`, `LARAVEL.DOMAIN_NO_INFRA`.
 
 ## Workflow
 
 1. Extract business behavior, trigger, state transition, and side effects.
-2. Identify the bounded context/module.
+2. Identify bounded context/module.
 3. Generate only the needed slice: Entity, Action, DTO, Model, Provider, Repository, Event, UseCase, Handler, Controller.
-4. Same module coordinates through its UseCase/Action; cross-module side effects use Domain Events.
-5. Read only needed templates from `templates/` and replace every placeholder.
-6. Test by layer (see `references/domain.md`, `references/application.md`).
+4. Keep same-module flow through UseCase/Action; cross-module side effects via Domain Events.
+5. Token-safe load order: `references/architecture.md` -> only relevant layer references -> only needed templates.
+6. Replace every template placeholder with compile-safe code.
+7. Test by layer (see `references/domain.md`, `references/application.md`).
 
 ## DDD-Specific Rules
 
-- Domain Actions accept primitives, Value Objects, or Domain objects; they must not import Application DTOs.
-- `Application/UseCases/*UseCase` accepts DTOs, calls one Action, and dispatches recorded Domain Events when needed.
-- Application DTOs are transport-neutral; build them from arrays, not HTTP Request objects.
-- Every DTO constructor property must have a `#[Rules([...])]` attribute for validation. DTOs without Rules attributes are invalid. See `templates/DTO.template` and `templates/RulesAttribute.template`.
+- Domain Actions accept primitives, Value Objects, or Domain objects; never Application DTOs.
+- Application DTOs are transport-neutral; build from arrays, not HTTP Request objects.
+- Every DTO constructor property must have `#[Rules([...])]` (see `templates/DTO.template` and `templates/RulesAttribute.template`).
 
 ## References
 
 - `references/architecture.md`: paths and layer index.
-- `references/domain.md`: Domain layer responsibilities and constraints.
-- `references/application.md`: Application layer responsibilities and constraints.
-- `references/infrastructure.md`: Infrastructure layer responsibilities and constraints.
-- `references/interfaces.md`: Interfaces layer responsibilities and constraints.
+- `references/domain.md`: Domain layer constraints.
+- `references/application.md`: Application layer constraints.
+- `references/infrastructure.md`: Infrastructure layer constraints.
+- `references/interfaces.md`: Interfaces layer constraints.
 - `references/cross-cutting.md`: event flow, imports, anti-patterns.
 - `references/templates.md`: template catalog.
 
 ## Layout
 
-`Modules/{Module}/Domain`, `Application`, `Infrastructure`, `Interfaces`. Never place module domain code under `app/`.
+`Modules/{Module}/Domain`, `Application`, `Infrastructure`, `Interfaces`.
+Never place module domain code under `app/`.

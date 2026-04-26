@@ -1,9 +1,8 @@
 # Context Docs
 
-These files are core context and are loaded once per the Context Loading Contract in `AGENTS.md`:
+Core startup context is defined in `AGENTS.md` (Context Loading Contract).
+This file intentionally stays minimal to avoid duplicated instructions.
 
 - `project-overview.md`: repository purpose and structure.
-- `coding-standards.md`: general agent, code, test, and commit rules. Skills may add domain-specific rules; workflows route work and define gates.
+- `coding-standards.md`: shared rules and rule IDs.
 - `current-feature.md`: active spec and completed history.
-
-Do not load `specs/` unless an active or named spec is needed.

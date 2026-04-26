@@ -1,5 +1,5 @@
 name: bug-fix
-version: 1.3
+version: 1.4
 purpose: Reproduce, diagnose, fix, and test a defect with the smallest safe change.
 
 trigger:
@@ -18,9 +18,9 @@ context:
   rule: Do not edit before root cause is clear.
 
 steps:
-  - reproduce: capture expected behavior, actual behavior, and trigger.
-  - isolate: trace data flow to the first wrong behavior.
-  - test: add a regression test when practical.
-  - fix: make the smallest root-cause change; no drive-by refactor.
-  - verify: run regression test, related tests, then broader tests when reasonable.
-  - summarize: include root cause, fix, tests, residual risk, next step.
+  - reproduce_expected_vs_actual_and_trigger
+  - isolate_first_wrong_behavior_before_editing
+  - add_regression_test_when_practical
+  - apply_smallest_root_cause_fix_no_drive_by_refactor
+  - verify_regression_then_related_then_broader_tests
+  - summarize_with_AGENTS_output_format

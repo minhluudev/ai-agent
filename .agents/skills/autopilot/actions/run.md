@@ -1,11 +1,8 @@
 # Run Action
 
-Pipeline: `analyze -> plan -> approval -> implement -> summary -> commit approval`.
+Pipeline: `analyze -> plan -> gate(plan_approval when required) -> implement -> test/fix -> summary -> gate(commit_approval when required)`.
 
-## Gates
-
-- Plan approval is required unless the user already approved implementation.
-- Commit approval is always required.
+Gate policy comes from the active workflow (`GATE.WORKFLOW_OWNERSHIP`).
 
 ## Stop Conditions
 

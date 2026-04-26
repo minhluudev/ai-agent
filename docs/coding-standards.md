@@ -1,43 +1,45 @@
 # Coding Standards
 
-Source of truth for general agent and project rules. Skills may add domain-specific rules; workflows route work and define gates.
+Shared source of truth for agent and project rules.
+Skills should reference rule IDs here instead of duplicating full text.
 
 ## Agent Rules
 
-- Prefer the smallest change that satisfies the requirement.
-- Read only relevant files; avoid repo-wide scans unless the task is cleanup or architecture review.
-- Keep instructions in one place: workflows route work, skills define domain rules, templates provide code skeletons.
-- Preserve public contracts unless the user explicitly asks for a breaking change.
-- Do not scan, reformat, or change unrelated files.
-- Do not add dependencies, change `.env`, alter public API shape, or run destructive DB operations without approval.
+- `AGENT.MINIMAL_CHANGE`: smallest change that satisfies the requirement.
+- `AGENT.SCOPED_READS`: read only relevant files; avoid repo-wide scans unless needed.
+- `AGENT.SINGLE_SOURCE`: keep routing in workflows, domain rules in skills, skeletons in templates.
+- `AGENT.CONTRACT_STABILITY`: preserve public contracts unless user requests breaking change.
+- `AGENT.UNRELATED_FILES`: do not reformat or modify unrelated files.
+- `AGENT.SAFE_OPERATIONS`: do not add dependencies, change `.env`, alter public API, or run destructive DB operations without approval.
+- `GATE.WORKFLOW_OWNERSHIP`: approval gates are defined by the active workflow.
 
 ## Commit Rules
 
-- Ask before committing. Use conventional commits.
-- Stage only files changed for the task; never `git add .`.
-- No AI attribution in commits.
+- `COMMIT.APPROVAL`: ask before committing; use conventional commits.
+- `COMMIT.SCOPED_STAGE`: stage only task files; never `git add .`.
+- `COMMIT.NO_AI_ATTRIBUTION`: no AI attribution in commit messages.
 
 ## Laravel Backend Rules
 
-- Controllers are thin: FormRequest validation → DTO creation → UseCase call → ApiResponse return.
-- Domain `*Action` classes own business rules and state transitions.
-- `*UseCase` classes orchestrate one Action and contain no business logic.
-- Use `ApiResponse`; do not call `response()->json()` in controllers.
-- Infrastructure contains Eloquent models, repository implementations, providers, external clients, and messaging adapters.
-- Cross-domain communication happens through Domain Events, not direct imports.
-- Cross-module imports are limited to published Domain Events.
-- Domain code must not depend on Eloquent, HTTP, Facades, or concrete infrastructure.
-- Eloquent models live only in `Infrastructure/Models` and are not Domain Entities.
+- `LARAVEL.CTRL_THIN`: FormRequest validation -> DTO creation -> UseCase call -> ApiResponse return.
+- `LARAVEL.DOMAIN_ACTION_OWNS_RULES`: Domain `*Action` owns business rules and state transitions.
+- `LARAVEL.USECASE_ONE_ACTION`: `*UseCase` orchestrates one Action; no business logic.
+- `LARAVEL.API_RESPONSE_ONLY`: controllers use `ApiResponse`, not `response()->json()`.
+- `LARAVEL.INFRA_ROLE`: infrastructure contains Eloquent models, repository impls, providers, and adapters.
+- `LARAVEL.CROSS_DOMAIN_EVENTS`: cross-domain communication uses Domain Events.
+- `LARAVEL.CROSS_MODULE_EVENTS_ONLY`: cross-module imports limited to published Domain Events.
+- `LARAVEL.DOMAIN_NO_INFRA`: domain code does not depend on Eloquent/HTTP/Facades/infrastructure.
+- `LARAVEL.MODEL_INFRA_ONLY`: Eloquent models live only in `Infrastructure/Models`.
 
 ## Test Rules
 
-- Tests cover behavior, not implementation details.
-- Domain: unit tests (mock repository contracts, no DB/framework).
-- Application: integration tests (real test DB, event dispatch assertions).
-- HTTP: feature tests (controllers, request validation, response shape, auth).
-- Event handlers: run twice with same event and assert idempotent outcome.
-- Prioritize tests by business/regression risk, not coverage percentage.
+- `TEST.BEHAVIOR_FIRST`: test behavior, not implementation details.
+- `TEST.DOMAIN_UNIT`: Domain tests are unit tests with mocked repository contracts.
+- `TEST.APP_INTEGRATION`: Application tests are integration tests with real test DB and event assertions.
+- `TEST.HTTP_FEATURE`: HTTP tests are feature tests for validation, response shape, and auth.
+- `TEST.EVENT_IDEMPOTENT`: run event handlers twice with same event and assert idempotency.
+- `TEST.RISK_PRIORITIZATION`: prioritize by business/regression risk, not coverage percentage.
 
 ## Error Handling
 
-- After 2–3 failed attempts at the same fix, stop and report root cause, attempts, and blocker.
+- `ERROR.THREE_ATTEMPTS_STOP`: after 2-3 failed attempts on same fix, stop and report root cause, attempts, and blocker.

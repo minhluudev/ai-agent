@@ -5,7 +5,9 @@ description: Consistent Laravel HTTP JSON responses via ApiResponse::success(), 
 
 # API Response
 
-Use `Modules\Shared\Support\Http\ApiResponse` for controller, middleware, and exception-handler JSON. Do not use `response()->json()` directly.
+Use this skill only when changing HTTP JSON response behavior.
+Base rule is `LARAVEL.API_RESPONSE_ONLY` in `docs/coding-standards.md`.
+Use `Modules\Shared\Support\Http\ApiResponse` for controller, middleware, and exception-handler JSON.
 
 ## Success
 
@@ -42,5 +44,5 @@ FormRequest validation is auto-handled. Use `ApiResponse::validation()` only for
 
 - Success code format: `RESOURCE.ACTION_SUCCESS`.
 - Problem code is stable and machine-readable.
-- DTOs/entities are mapped to arrays before response.
-- External failures are caught and returned as `INTERNAL.ERROR` unless a more specific code exists.
+- Map DTOs/entities to arrays before response.
+- External failures return `INTERNAL.ERROR` unless a more specific code exists.

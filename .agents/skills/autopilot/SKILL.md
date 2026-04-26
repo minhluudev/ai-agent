@@ -10,19 +10,19 @@ Execute `$ARGUMENTS`.
 
 ## Commands
 
-- `spec`: create `docs/specs/{name}.md` from a requirement and set it active.
-- `run`: analyze -> plan -> approval -> implement -> test/fix -> summary -> commit approval.
+- `spec`: create `docs/specs/{name}.md` and set active spec.
+- `run`: analyze -> plan -> gate(plan approval if required) -> implement -> test/fix -> summary -> gate(commit approval if required).
 - `bugfix`: reproduce -> root cause -> regression test -> fix -> verify.
-- `refactor`: baseline -> plan -> change structure -> verify no behavior change.
-- `testgen`: inspect behavior -> add useful tests -> run relevant suite.
+- `refactor`: baseline -> plan -> structure change -> verify no behavior change.
+- `testgen`: inspect behavior -> add tests -> run relevant suite.
 
-Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`. Read only the matching file in `actions/` when needed.
+Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`.
+Load only the matching file in `actions/` when needed.
 
 ## Shared Rules
 
-- All code rules are in `docs/coding-standards.md`. Do not duplicate them in actions.
-- Source of truth for current work: active spec in `docs/current-feature.md` and files under `docs/specs/`.
+- Use `docs/coding-standards.md` as shared rule source.
+- Source of truth for current work: `docs/current-feature.md` and `docs/specs/`.
 - Load `domain-driven-design` only for backend/module architecture.
 - Load `api-response` only for HTTP JSON responses.
-- Commit always requires explicit user approval.
-- Each advanced action has a Prerequisites section — check it before executing steps.
+- Approval gates are workflow-owned (`GATE.WORKFLOW_OWNERSHIP`).
