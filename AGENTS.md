@@ -13,6 +13,7 @@ General rules live in `docs/coding-standards.md`. Skills may add domain-specific
 - `/autopilot testgen {target}`: add behavior-focused tests.
 - `/spect-writer init-project`: refresh `docs/project-overview.md`.
 - `/cleanup check|run`: inspect or fix housekeeping issues.
+- `/review-code diff|file|pr`: review code across 7 dimensions (correctness, readability, maintainability, performance, security, error handling, convention).
 
 ## Context Loading Contract
 
@@ -42,7 +43,8 @@ Pick exactly one workflow per task. When ambiguous, use this priority:
 2. **feature-development.yaml** — if the task adds new behavior or implements a spec.
 3. **refactor.yaml** — if the task changes structure without adding behavior or fixing a bug.
 4. **test-generation.yaml** — if the task only adds tests for existing code.
-5. **documentation-update.yaml** — if the task only changes docs, workflows, skills, or agent rules.
+5. **code-review.yaml** — if the task is to review a diff, file, or PR without making changes.
+6. **documentation-update.yaml** — if the task only changes docs, workflows, skills, or agent rules.
 
 If priority does not resolve the ambiguity, ask the user.
 
@@ -53,6 +55,7 @@ If priority does not resolve the ambiguity, ask the user.
 - `api-response`: standardized HTTP JSON responses. Load only when the task touches HTTP controllers.
 - `spect-writer`: project overview initialization.
 - `cleanup`: housekeeping checks.
+- `code-review`: 7-dimension code review (correctness, readability, maintainability, performance, security, error handling, convention). Load only when reviewing code.
 
 ## Workflow Execution
 

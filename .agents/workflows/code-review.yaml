@@ -1,0 +1,28 @@
+name: code-review
+version: 1.0
+purpose: Structured review of a diff, file, or PR across correctness, readability, maintainability, performance, security, error handling, and convention.
+
+trigger:
+  when:
+    - user asks to review code, a PR, or a diff
+    - user runs /autopilot review or /review-code
+    - user provides a file path or diff and asks for feedback
+
+context:
+  core_context: provided_by_AGENTS.md
+  rules: docs/coding-standards.md
+  required_skill: .agents/skills/code-review/SKILL.md
+  load_on_demand_only_if_needed:
+    - .agents/skills/domain-driven-design/SKILL.md for Laravel/backend module code
+    - .agents/skills/api-response/SKILL.md for HTTP controller code
+  rule: Read only the files/diff under review. Do not scan unrelated files.
+
+gates:
+  findings_confirmed: present findings and wait for user acknowledgement before suggesting fixes
+
+steps:
+  - scope: identify what is being reviewed (diff, file path, PR description, or inline snippet).
+  - load: read the target file(s) or diff. If a PR, read changed files only.
+  - review: apply all 7 dimensions from code-review SKILL.md; always run Correctness and Security.
+  - report: output findings using the [DIMENSION] SEVERITY format defined in the skill.
+  - summarize: print Review Summary with severity counts and overall verdict.
