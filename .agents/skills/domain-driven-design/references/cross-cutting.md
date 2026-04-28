@@ -2,7 +2,7 @@
 
 ## Event Flow
 
-Controller/Listener -> DTO -> UseCase -> Action -> Repository -> Entity records Domain Event -> UseCase dispatches -> Handler -> receiving module UseCase.
+Controller/Listener -> DTO -> UseCase -> Action -> Repository -> Entity records Domain Event -> UseCase calls `releaseEvents()` and dispatches -> Handler -> receiving module UseCase.
 
 ## Import Rules
 

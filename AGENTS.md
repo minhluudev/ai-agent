@@ -12,6 +12,7 @@ General rules live in `docs/coding-standards.md`. Skills add domain-specific rul
 - `/autopilot bugfix {description}`: reproduce, isolate, fix, and test a defect.
 - `/autopilot refactor {target}`: improve structure without behavior change.
 - `/autopilot testgen {target}`: add behavior-focused tests.
+- `/autopilot review {diff|file|pr}`: review code across 7 dimensions.
 - `/spect-writer init-project`: refresh `docs/project-overview.md`.
 - `/cleanup check|run`: inspect or fix housekeeping issues.
 - `/review-code diff|file|pr`: review code across 7 dimensions.
@@ -62,6 +63,8 @@ If still ambiguous, ask the user.
 - `spect-writer`: project overview initialization.
 - `cleanup`: housekeeping checks.
 - `code-review`: 7-dimension review.
+
+Advanced autopilot actions (`analyze`, `plan`, `implement`, `summary`, `commit`) are internal/resume points. Prefer the public commands above unless resuming a stopped workflow.
 
 ## Workflow Execution
 

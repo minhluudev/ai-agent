@@ -4,7 +4,7 @@ Contains: UseCases, DTOs, EventHandlers.
 
 ## Responsibilities
 
-- `UseCase`: follows `LARAVEL.USECASE_ONE_ACTION`; accepts Application DTO, calls one Action, returns result, dispatches recorded Domain Events at the Application boundary.
+- `UseCase`: follows `LARAVEL.USECASE_ONE_ACTION`; accepts Application DTO, calls one Action, returns result, dispatches events returned by `Entity::releaseEvents()` at the Application boundary.
 - `DTO`: transport-neutral input/output shape built from arrays or primitives; no Request dependency.
 - `EventHandler`: consumes events idempotently and calls its own module UseCase.
 

@@ -3,6 +3,7 @@
 namespace Modules\Shared\DTOs;
 
 use Modules\Shared\Attributes\Rules;
+use LogicException;
 use ReflectionClass;
 
 abstract class BaseDTO
@@ -22,7 +23,16 @@ abstract class BaseDTO
 
         foreach ($constructor->getParameters() as $param) {
             $attrs = $param->getAttributes(Rules::class);
-            $rules[$param->getName()] = $attrs ? $attrs[0]->newInstance()->rules : [];
+
+            if ($attrs === []) {
+                throw new LogicException(sprintf(
+                    'Missing #[Rules] attribute on %s::$%s.',
+                    static::class,
+                    $param->getName(),
+                ));
+            }
+
+            $rules[$param->getName()] = $attrs[0]->newInstance()->rules;
         }
 
         return $rules;

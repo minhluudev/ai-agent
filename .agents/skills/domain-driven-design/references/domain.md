@@ -4,7 +4,7 @@ Contains: Entities, Actions, Events, Repository contracts, Domain Services, Valu
 
 ## Responsibilities
 
-- `Entity`: framework-free state, invariant behavior, and recorded Domain Events when needed.
+- `Entity`: framework-free state, invariant behavior, and recorded Domain Events exposed through `releaseEvents()` when needed.
 - `Action`: owns business flow, repository contracts, and state transitions. Does not import Application DTOs or HTTP objects.
 - `Event`: immutable record of something that happened in the domain.
 - `Repository contract`: stable interface for persistence; implemented in Infrastructure.

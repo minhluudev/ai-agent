@@ -16,7 +16,7 @@ Execute `$ARGUMENTS`.
 - `refactor`: baseline -> plan -> structure change -> verify no behavior change.
 - `testgen`: inspect behavior -> add tests -> run relevant suite.
 
-Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`.
+Advanced/internal resume actions: `analyze`, `plan`, `implement`, `summary`, `commit`.
 Load only the matching file in `actions/` when needed.
 
 ## Shared Rules
