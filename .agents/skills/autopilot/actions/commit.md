@@ -7,8 +7,8 @@
 
 ## Steps
 
-1. Show files to stage and proposed conventional commit message.
-2. Ask: `Commit these changes? (yes/no/edit message)`.
-3. If approved, stage and commit following `coding-standards.md` Commit Rules.
-4. Update `docs/current-feature.md` and active spec status only when the commit represents completed spec work.
+1. If the commit represents completed spec work, update `docs/current-feature.md` and the active spec status before staging so the state change is included in the commit.
+2. Show files to stage and proposed conventional commit message.
+3. Ask: `Commit these changes? (yes/no/edit message)`.
+4. If approved, stage and commit following `COMMIT.APPROVAL`, `COMMIT.SCOPED_STAGE`, `COMMIT.NO_AI_ATTRIBUTION`, and `COMMIT.BUILD_GATE`.
 5. Report commit hash and branch.

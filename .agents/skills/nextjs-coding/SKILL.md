@@ -27,6 +27,7 @@ Before writing any file:
 | Business rules and data transforms | `<source-root>/modules/<domain>/services/` |
 | Module-scoped React hooks | `<source-root>/modules/<domain>/hooks/` |
 | Module-private UI components | `<source-root>/modules/<domain>/components/` |
+| Installed shadcn/ui primitives | configured path from `components.json` (often `<source-root>/components/ui/`) |
 | Domain TypeScript types / DTOs | `<source-root>/modules/<domain>/types/` |
 | Reusable cross-domain code | `<source-root>/shared/` |
 | Global API client, auth service | `<source-root>/services/` |
@@ -77,7 +78,7 @@ src/
 ## Step 3 — Apply App Router conventions
 
 - `params` is async in `page.tsx` and `layout.tsx`; `searchParams` is async in `page.tsx` only. Layouts do not receive `searchParams`.
-- `error.tsx` **must** be a Client Component (`'use client'`) and expose recovery through the Next.js error boundary retry prop (`reset` in the current API reference).
+- `error.tsx` **must** be a Client Component (`'use client'`) and expose recovery through the supported Next.js error boundary prop for the installed version.
 - `loading.tsx` is a Suspense boundary fallback — keep it lightweight.
 - `page.tsx` composes hooks/components from `modules/<domain>` — no heavy business logic inline.
 
@@ -99,6 +100,7 @@ app/.../page.tsx
 - **Never** create parallel architecture roots (`src/modules/` and `modules/` in the same task).
 - Keep `'use client'` minimal — add only when interactivity, hooks, or browser APIs are required.
 - Keep import paths consistent with `tsconfig.json` path aliases.
+- Do not relocate installed shadcn/ui primitives into domain modules; compose them from the configured registry path.
 
 ## Pre-finish checklist
 
@@ -108,4 +110,5 @@ app/.../page.tsx
 - [ ] `error.tsx` is a Client Component with the supported recovery prop for the installed Next.js version.
 - [ ] Business logic lives in `modules/` or `services/`, not in route files.
 - [ ] Shared code is genuinely cross-domain (used by ≥ 2 domains).
+- [ ] shadcn/ui primitives remain in the configured path and feature components compose them.
 - [ ] Run `npm run lint` if changes are substantial.

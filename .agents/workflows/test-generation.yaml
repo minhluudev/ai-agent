@@ -16,7 +16,7 @@ context:
 
 steps:
   - inspect_behavior: identify inputs, outputs, side effects, and contracts.
-  - choose_cases: prioritize success, failure, and edge cases by regression risk.
-  - write_tests: follow docs/coding-standards.md test rules.
+  - choose_cases: prioritize success, failure, and edge cases following TEST.RISK_PRIORITIZATION.
+  - write_tests: follow TEST.BEHAVIOR_FIRST and docs/coding-standards.md test rules.
   - run_tests: new tests first, then related/full suite when reasonable.
   - summarize: include tests added, gaps, commands run, next step.

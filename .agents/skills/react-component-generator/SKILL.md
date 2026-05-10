@@ -50,6 +50,7 @@ Read 1–2 existing components near the resolved location and match their:
 - Import style and `@/` alias usage
 - Export style (default export vs named)
 - Tailwind usage patterns
+- Accessibility and feedback-state patterns
 
 ### Step 4 — Decide which files to create
 
@@ -71,6 +72,8 @@ Use the closest template from `templates/` as scaffolding — **never leave plac
 
 Templates are minimal scaffolds. Add `IProps`, `useController(props)`, and returned controller values only when the target component actually needs them. Replace `ComponentName` and remove any unused controller call before finishing. If props + controller wiring is still unclear, read `references/props-controller-pattern.md`.
 
+Generated components must include user-facing states the component owns: loading, empty, error, disabled, and success where relevant. Do not create placeholder text explaining how the component works.
+
 ### Step 6 — Write to resolved location
 
 - `<resolved-folder>/index.tsx`
@@ -89,6 +92,8 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 - [ ] `style.module.css` only created if CSS classes are actually used.
 - [ ] Component location matches `nextjs-coding` placement decision.
 - [ ] shadcn/ui used before custom markup.
+- [ ] Interactive controls are semantic, keyboard reachable, and accessible by name.
+- [ ] Text fits across mobile and desktop constraints without overlap or clipped controls.
 
 ---
 

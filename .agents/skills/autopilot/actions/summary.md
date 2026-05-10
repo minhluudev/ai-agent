@@ -11,7 +11,7 @@ Gather active spec goals plus `git status` and relevant `git diff`.
 Output using the format defined in `AGENTS.md` Output Format section.
 
 Also check:
-- No unrelated files in the diff.
+- No unrelated files in the diff (`AGENT.UNRELATED_FILES`).
 - No secrets or `.env` values exposed.
 - No unnecessary dependencies added.
 - `npm run build` passes.

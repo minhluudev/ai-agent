@@ -14,13 +14,13 @@ context:
   load_on_demand_only_if_needed:
     - .agents/skills/autopilot/SKILL.md
     - .agents/skills/nextjs-coding/SKILL.md for App Router issues
-  rule: Do not edit before root cause is clear.
+  rule: follow AGENT.SCOPED_READS; do not edit before root cause is clear
 
 steps:
   - reproduce: capture expected behavior, actual behavior, and trigger.
   - isolate: trace data flow to the first wrong behavior.
   - write_test: add a regression test that fails before the fix when practical.
-  - fix: make the smallest root-cause change; no drive-by refactor.
+  - fix: follow AGENT.MINIMAL_CHANGE; no drive-by refactor.
   - run_tests: run regression and related tests when a test runner is configured; confirm fix passes.
   - build: run `npm run build`; confirm fix is isolated.
   - summarize: include root cause, fix, tests, residual risk, next step.

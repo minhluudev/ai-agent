@@ -15,7 +15,7 @@ context:
     - .agents/skills/react-component-generator/SKILL.md for component restructuring
 
 refactor_rules:
-  - No behavior or public API changes unless explicitly requested.
+  - Follow AGENT.CONTRACT_STABILITY; no behavior or public API changes unless explicitly requested.
   - Establish a passing baseline (`npm run build` plus existing related tests when a test runner is configured) before starting.
   - Add characterization tests before risky refactors.
 

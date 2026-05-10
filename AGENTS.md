@@ -27,6 +27,7 @@ Do not reload a file already loaded. Do not read templates, references, specs, o
 
 ## Multi-Agent Coordination
 
+- Sequential agents (one finishes before the next starts) use `docs/current-feature.md` as the handoff interface for Active Spec, Status, and Sub-spec Queue.
 - Use a separate git worktree and branch for each concurrent agent.
 - This instruction set is shared by Codex and Claude Code; keep provider-specific behavior in the provider adapter file only.
 - Treat `docs/current-feature.md` as branch-local state.
@@ -42,6 +43,8 @@ Pick exactly one workflow per task. When ambiguous, use this priority:
 3. **refactor.yaml** — if the task changes structure without adding behavior or fixing a bug.
 4. **test-generation.yaml** — if the task only adds tests for existing code.
 5. **documentation-update.yaml** — if the task only changes docs, workflows, skills, or agent rules.
+
+Precedence rule: if the target is `AGENTS.md`, `docs/`, `.agents/workflows/`, `.agents/skills/`, or the request is context/token optimization, use **documentation-update.yaml** unless the user explicitly asks for a different workflow.
 
 If priority does not resolve the ambiguity, ask the user.
 

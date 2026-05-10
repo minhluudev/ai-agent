@@ -20,10 +20,10 @@ Advanced actions: `analyze`, `plan`, `implement`, `summary`, `commit`. Read only
 
 ## Shared Rules
 
-- All code rules are in `docs/coding-standards.md`. Do not duplicate them in actions.
+- All shared rule IDs and code rules are in `docs/coding-standards.md`. Do not duplicate them in actions.
 - Source of truth for current work: active spec in `docs/current-feature.md` and files under `docs/specs/`.
 - Load `nextjs-coding` for App Router architecture decisions.
 - Load `react-component-generator` when scaffolding new components.
 - Load `frontend-coding-rules` for UI/UX constraints.
-- Commit always requires explicit user approval.
+- Commit always follows `COMMIT.APPROVAL`.
 - Each advanced action has a Prerequisites section — check it before executing steps.

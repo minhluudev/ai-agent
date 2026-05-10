@@ -7,12 +7,12 @@ argument-hint: run|check
 Review the codebase for cleanup tasks:
 
 1. Make sure that the history in @docs/current-feature.md is in order from oldest to newest
-2. Find unnecessary log
+2. Find unnecessary debug logs
 3. Find unused imports
 4. Check for stale TODO comments
 5. Find orphaned/unused files
 6. Check that context files match actual project state
-7. Check if the .env.production has the same variables (not always the same value) as the .env. If something is missing, tell me.
+7. When both files exist, check whether `.env.production` has the same variable names as `.env` (values may differ). If something is missing, report it.
 
 **Mode: $ARGUMENTS**
 

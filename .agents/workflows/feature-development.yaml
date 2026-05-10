@@ -12,24 +12,26 @@ context:
   core_context: provided_by_AGENTS.md
   rules: docs/coding-standards.md
   load_on_demand_only_if_needed:
-    - active spec from docs/current-feature.md
+    - active spec file referenced in docs/current-feature.md (not current-feature.md itself — already loaded by AGENTS.md)
     - .agents/skills/autopilot/SKILL.md
     - .agents/skills/nextjs-coding/SKILL.md for App Router architecture
+    - .agents/skills/frontend-coding-rules/SKILL.md for user-facing UI work
     - .agents/skills/react-component-generator/SKILL.md for component generation
-  rule: Inspect only files related to the spec.
+  rule: follow AGENT.SCOPED_READS and AGENT.MINIMAL_CHANGE
 
 gates:
   plan_approval: required unless user already approved implementation
   commit_approval: always_required
 
 steps:
-  - understand: identify goal, actor, input, output, side effects, constraints.
+  - understand: identify goal, actor, input, output, side effects, UI states, and constraints.
   - inspect: read relevant source and tests only.
-  - plan: list files, order by dependency, include test plan.
-  - implement: follow coding-standards.md rules and nextjs-coding skill layer map.
-  - write_tests: write/update behavior tests for changed code following coding-standards.md Test Rules.
+  - plan: list files, order by dependency, include test plan, and follow SPEC.ATOMIC_STEPS.
+  - implement: follow coding-standards.md rule IDs, nextjs-coding skill layer map, and frontend-coding-rules for UI.
+  - write_tests: write/update behavior tests following TEST.BEHAVIOR_FIRST.
   - run_tests: run new and related test files when a test runner is configured; fix failures before proceeding.
   - build: run `npm run build`; fix all errors before proceeding.
+  - verify_ui: for user-facing UI, run browser/screenshot verification when available; report viewport or interaction gaps.
   - fix_loop: fix root causes up to 3 attempts, then stop and report.
   - review: check diff, secrets, unrelated changes, API compatibility.
   - summarize: use AGENTS.md output format.

@@ -11,7 +11,7 @@
 2. Create a feature/fix branch only when the user or workflow requires it.
 3. Implement in dependency order following `docs/coding-standards.md` for all code rules.
 4. Use `nextjs-coding` to resolve `<source-root>` and map every new file to a target layer.
-5. If the goal involves UI, apply `frontend-coding-rules`. Use `react-component-generator` for new components.
+5. If the goal involves UI, apply `frontend-coding-rules`, including accessibility, responsive stability, feedback states, and browser/screenshot verification when available. Use `react-component-generator` for new components.
 6. Write/update behavior tests for changed code following `coding-standards.md` Test Rules.
 7. Run new and related tests when a test runner is configured. Fix failures before proceeding.
 8. Run `npm run build`. Fix root causes up to 3 attempts. Stop and report if still failing.
