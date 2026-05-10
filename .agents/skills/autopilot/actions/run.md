@@ -4,6 +4,8 @@ Pipeline: `analyze -> plan -> implement -> test/fix -> summary -> gate(commit ap
 
 Gate policy comes from the active workflow (`GATE.WORKFLOW_OWNERSHIP`).
 
+After the pipeline completes for a **simple spec** (non-epic), set `docs/current-feature.md` Status to `Complete`.
+
 ## Epic Detection
 
 Before starting the pipeline, read `docs/current-feature.md`:
