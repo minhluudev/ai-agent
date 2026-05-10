@@ -1,7 +1,7 @@
 ---
 name: autopilot
 description: "Spec-first AI dev pipeline: requirement -> spec -> plan -> implementation -> tests -> optional commit."
-argument-hint: spec|run|bugfix|refactor|testgen|analyze|plan|implement|summary|commit
+argument-hint: spec|run|bugfix|refactor|testgen|review|analyze|plan|implement|summary|commit
 ---
 
 # Autopilot
@@ -11,10 +11,11 @@ Execute `$ARGUMENTS`.
 ## Commands
 
 - `spec`: create `docs/specs/{name}.md` and set active spec.
-- `run`: analyze -> plan -> gate(plan approval if required) -> implement -> test/fix -> summary -> gate(commit approval if required).
-- `bugfix`: reproduce -> root cause -> regression test -> fix -> verify.
-- `refactor`: baseline -> plan -> structure change -> verify no behavior change.
-- `testgen`: inspect behavior -> add tests -> run relevant suite.
+- `run`: analyze -> plan -> implement -> test/fix -> summary -> gate(commit approval when required).
+- `bugfix`: reproduce -> root cause -> regression test -> fix -> verify -> summarize.
+- `review`: delegate to `code-review` skill; load `.agents/skills/code-review/SKILL.md`.
+- `refactor`: baseline -> plan -> structure change -> verify no behavior change -> summarize.
+- `testgen`: inspect behavior -> add tests -> run relevant suite -> summarize.
 
 Advanced/internal resume actions: `analyze`, `plan`, `implement`, `summary`, `commit`.
 Load only the matching file in `actions/` when needed.

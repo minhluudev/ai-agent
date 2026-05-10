@@ -50,4 +50,4 @@ Skills should reference rule IDs here instead of duplicating full text.
 
 ## Error Handling
 
-- `ERROR.THREE_ATTEMPTS_STOP`: after 2-3 failed attempts on same fix, stop and report root cause, attempts, and blocker.
+- `ERROR.THREE_ATTEMPTS_STOP`: after 3 failed attempts on same fix, stop and report root cause, attempts, and blocker.

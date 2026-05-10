@@ -32,9 +32,8 @@ Do not reload files already loaded. Do not read unrelated templates, references,
 
 ## Multi-Agent Coordination
 
-- Use a separate git worktree and branch for each concurrent agent.
-- Treat `docs/current-feature.md` as branch-local state.
-- With multiple agents, run from an explicit spec path instead of relying on `docs/current-feature.md`.
+- **Sequential agents** (one finishes before the next starts): use `docs/current-feature.md` as the handoff interface — it carries Active Spec path, Status, and Sub-spec Queue between agents.
+- **Concurrent agents** (running in parallel on the same repo): use a separate git worktree and branch per agent; pass the spec path explicitly instead of relying on `docs/current-feature.md` to avoid overwrites.
 - Do not run parallel code edits in the same working tree.
 
 ## Workflow Selection
@@ -57,7 +56,7 @@ If still ambiguous, ask the user.
 
 ## Skill Map
 
-- `autopilot`: spec, plan, implementation, tests, summary, commit proposal.
+- `autopilot`: spec, plan, implementation, tests, summary, commit proposal, review (delegates to code-review skill).
 - `domain-driven-design`: Laravel module boundaries, Actions, DTOs, repositories, events.
 - `api-response`: standardized HTTP JSON responses.
 - `spect-writer`: project overview initialization.

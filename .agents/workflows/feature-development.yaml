@@ -20,17 +20,15 @@ context:
 
 gates:
   ownership: GATE.WORKFLOW_OWNERSHIP
-  plan_approval: required unless already approved
   commit_approval: always_required
 
 steps:
   - understand
   - inspect
   - plan
-  - gate_plan_once_if_required
   - implement
   - test
   - fix_loop_max_3_then_stop_and_report
   - review_diff_scope_and_risks
-  - gate_commit_once_if_required
   - summarize_with_AGENTS_output_format
+  - gate_commit_once_if_required

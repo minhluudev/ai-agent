@@ -3,11 +3,11 @@
 ## Prerequisites
 
 - Active spec must exist in `docs/current-feature.md`. If missing, run `spec` first or ask the user.
-- Approved Implement Plan is required when the active workflow requires it. If missing, run `plan` first or ask the user.
+- Implement Plan must exist in the active spec. If missing, run `plan` first or ask the user.
 
 ## Steps
 
-1. Read active spec and approved Implement Plan.
+1. Read active spec and Implement Plan.
 2. Create a feature/fix branch only when the user or workflow requires it.
 3. Implement in dependency order. Follow `docs/coding-standards.md` for all code rules.
 4. Add/update behavior tests for changed code.

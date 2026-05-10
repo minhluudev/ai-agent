@@ -13,6 +13,4 @@ Include:
 
 For Laravel backend work, follow `domain-driven-design`: migration -> Domain -> Infrastructure -> Application -> Interfaces -> tests.
 
-Gate is owned by the active workflow (`GATE.WORKFLOW_OWNERSHIP`); do not re-trigger here.
-If this action runs standalone (without workflow orchestration), ask once:
-`Proceed with implementation? (yes/no/adjust)`.
+No approval gate after plan. Proceed directly to `implement`.
