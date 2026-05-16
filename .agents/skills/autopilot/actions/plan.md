@@ -7,6 +7,7 @@ Include:
 - Ordered rollout steps and file paths.
 - Dependency order and technical decisions.
 - Test plan: unit tests (Vitest for utilities/actions), build check (`npm run build`), and browser/UI verification for user-facing changes.
+- Test case mapping: convert spec `Test Cases` (prioritize P0/P1 first) into concrete test targets/commands.
 - Risks or unknowns that affect implementation.
 
 Atomicity (`SPEC.ATOMIC_STEPS`): each step targets exactly one production file. Include the paired test file only when it directly verifies that production file. Per step, include exact file path, one-line technical decision, dependency, and verification. If steps exceed about 7, stop and restructure the active spec as an epic before continuing.

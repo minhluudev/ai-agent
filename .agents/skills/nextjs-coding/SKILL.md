@@ -1,6 +1,6 @@
 ---
 name: nextjs-coding
-description: Build and refactor Next.js App Router features in the current repository. Use when tasks involve creating or updating routes (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, route groups), wiring providers, adding feature logic, integrating shared utilities and services, or mapping code into the repository's Target architecture. Treat the Target architecture as the default source of truth for new code placement and only deviate when the user or an explicit local convention requires it.
+description: Build and refactor Next.js App Router features in the current repository. Use when tasks involve creating or updating routes (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, route groups), wiring providers, adding feature logic, integrating shared utilities and services, or mapping code into the repository's Target architecture. Include automation E2E tests for real user flows using Playwright. Treat the Target architecture as the default source of truth for new code placement and only deviate when the user or an explicit local convention requires it.
 ---
 
 # Next.js Coding
@@ -24,6 +24,7 @@ Before writing any file:
 | Route files (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`) | `<source-root>/app/...` |
 | Domain business logic | `<source-root>/modules/<domain>/` |
 | External API calls for a domain | `<source-root>/modules/<domain>/api/` |
+| Domain mock API implementation | `<source-root>/modules/<domain>/api/` |
 | Business rules and data transforms | `<source-root>/modules/<domain>/services/` |
 | Module-scoped React hooks | `<source-root>/modules/<domain>/hooks/` |
 | Module-private UI components | `<source-root>/modules/<domain>/components/` |
@@ -88,8 +89,21 @@ src/
 app/.../page.tsx
   → modules/<domain>/hooks  or  modules/<domain>/services
     → modules/<domain>/api
-      → services/api-client.ts
+      → if EXTERNAL_API=mock: mockApi
+      → if EXTERNAL_API=api: services/api-client.ts
 ```
+
+### API source switch (mock vs real API)
+
+- Every domain that calls external APIs must provide a mock API implementation inside `<source-root>/modules/<domain>/api/` (for example `mockApi.ts`).
+- API access layer must switch source by env variable `EXTERNAL_API`:
+  - `EXTERNAL_API=mock` -> use `mockApi`
+  - `EXTERNAL_API=api` -> use real API implementation
+- Default env value is `EXTERNAL_API=api` when the variable is missing or unspecified.
+- Keep the switch logic centralized in the domain API layer (avoid scattering env checks across page/component files).
+- `services/api-client.ts` is used only by the real API path (`EXTERNAL_API=api`).
+- Mock and real API implementations must share one response contract/type source in `<source-root>/modules/<domain>/types/` to prevent drift.
+- For automated tests (unit/integration/E2E/CI), set `EXTERNAL_API=mock` unless the spec explicitly requires validating real/sandbox API behavior.
 
 ## Guardrails
 
@@ -98,9 +112,24 @@ app/.../page.tsx
 - **Never** create `features/` or `lib/` when equivalent target layers already exist.
 - **Never** hide business logic in route-private helpers (`_lib`) — put it in `modules/` or `shared/`.
 - **Never** create parallel architecture roots (`src/modules/` and `modules/` in the same task).
+- **Never** call real API directly from page/component files; always go through `modules/<domain>/api/` with the `EXTERNAL_API` switch.
 - Keep `'use client'` minimal — add only when interactivity, hooks, or browser APIs are required.
 - Keep import paths consistent with `tsconfig.json` path aliases.
 - Do not relocate installed shadcn/ui primitives into domain modules; compose them from the configured registry path.
+
+## Automation E2E Testing (Playwright)
+
+- For user-facing flow changes (navigation, form submit, auth flow, checkout/order flow, multi-step interactions), create or update automation E2E tests.
+- E2E tests must validate real flow behavior end-to-end (user action -> UI/state transition -> expected outcome), not implementation details.
+- Prefer Playwright, following the official Next.js guide for Playwright E2E setup and usage.
+- If Playwright is not set up yet, initialize with:
+
+```bash
+npm init playwright@latest
+```
+
+- Place tests in the repository's existing E2E location (commonly `e2e/` or `tests/e2e/`) and keep naming consistent (for example `*.spec.ts`).
+- Run E2E tests for affected flows before finishing (for example `npx playwright test` or project-specific `npm run test:e2e` when available).
 
 ## Pre-finish checklist
 
@@ -111,4 +140,8 @@ app/.../page.tsx
 - [ ] Business logic lives in `modules/` or `services/`, not in route files.
 - [ ] Shared code is genuinely cross-domain (used by ≥ 2 domains).
 - [ ] shadcn/ui primitives remain in the configured path and feature components compose them.
+- [ ] Domain API layer includes `mockApi` and real API path with env switch (`EXTERNAL_API=mock|api`), defaulting to `api`.
+- [ ] Mock and real API paths share the same typed contract (no response-shape drift).
+- [ ] Automated tests set `EXTERNAL_API=mock` unless real API verification is explicitly required by spec.
 - [ ] Run `npm run lint` if changes are substantial.
+- [ ] E2E tests are added/updated for changed user-facing flows and pass for affected scenarios.

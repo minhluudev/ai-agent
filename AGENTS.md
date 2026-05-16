@@ -51,6 +51,7 @@ If priority does not resolve the ambiguity, ask the user.
 ## Skill Map
 
 - `autopilot`: spec-first pipeline — spec, run, bugfix, refactor, testgen, analyze, plan, implement, summary, commit.
+- `codebase-setup`: bootstrap and normalize a codebase (structure, dependencies, configs, quality gates, CI/DX).
 - `nextjs-coding`: Next.js App Router architecture, routing, data flow, and file placement.
 - `react-component-generator`: generate typed React components with correct layer placement.
 - `frontend-coding-rules`: UI/UX conventions, component stack priority, and styling rules.

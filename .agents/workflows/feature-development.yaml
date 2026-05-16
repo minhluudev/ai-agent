@@ -30,6 +30,7 @@ steps:
   - implement: follow coding-standards.md rule IDs, nextjs-coding skill layer map, and frontend-coding-rules for UI.
   - write_tests: write/update behavior tests following TEST.BEHAVIOR_FIRST.
   - run_tests: run new and related test files when a test runner is configured; fix failures before proceeding.
+  - run_e2e: for changed user-facing flows, run E2E tests when Playwright (or existing E2E runner) is configured.
   - build: run `npm run build`; fix all errors before proceeding.
   - verify_ui: for user-facing UI, run browser/screenshot verification when available; report viewport or interaction gaps.
   - fix_loop: fix root causes up to 3 attempts, then stop and report.

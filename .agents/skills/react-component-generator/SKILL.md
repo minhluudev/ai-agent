@@ -1,6 +1,6 @@
 ---
 name: react-component-generator
-description: Create or refactor small-to-medium React components for the current repository. Use when the user asks for a component or UI block; always create `index.tsx`, and add `controller.ts` or `style.module.css` only when the component actually needs logic separation or scoped CSS. Resolve the component path through `nextjs-coding` instead of assuming a fixed component root.
+description: Create or refactor small-to-medium React components for the current repository. Use when the user asks for a component or UI block; always create `index.tsx`, and add `controller.ts` or `style.module.css` only when the component actually needs logic separation or scoped CSS. When creating a component, always create/update Unit/Component Test files. Resolve the component path through `nextjs-coding` instead of assuming a fixed component root.
 ---
 
 # React Component Generator
@@ -47,7 +47,7 @@ Use `nextjs-coding` to determine where the component belongs:
 ### Step 3 — Inspect existing components
 
 Read 1–2 existing components near the resolved location and match their:
-- Import style and `@/` alias usage
+- Import style and project alias usage (prefer `~/` when configured)
 - Export style (default export vs named)
 - Tailwind usage patterns
 - Accessibility and feedback-state patterns
@@ -57,6 +57,7 @@ Read 1–2 existing components near the resolved location and match their:
 | File | Create when |
 |------|-------------|
 | `index.tsx` | **Always** |
+| `index.test.tsx` | **Always when creating a component**; when refactoring, update existing tests or add missing tests |
 | `controller.ts` | Component needs: state, API calls, form handling, non-trivial event handlers, or side effects |
 | `style.module.css` | Layout too complex for Tailwind, needs `@keyframes`, `::before`/`::after`, or advanced pseudo-states |
 
@@ -67,6 +68,7 @@ Use the closest template from `templates/` as scaffolding — **never leave plac
 - `templates/index.tsx` → no controller, no CSS module
 - `templates/index-with-controller.tsx` → client component + controller hook
 - `templates/index-with-all.tsx` → client component + controller hook + CSS module
+- `templates/index.test.tsx` → Unit/Component test scaffold (runner-agnostic Testing Library)
 - `templates/controller.ts` → hook logic
 - `templates/style.module.css` → CSS module base
 
@@ -74,9 +76,12 @@ Templates are minimal scaffolds. Add `IProps`, `useController(props)`, and retur
 
 Generated components must include user-facing states the component owns: loading, empty, error, disabled, and success where relevant. Do not create placeholder text explaining how the component works.
 
+When creating tests, cover component behavior (render output, user interactions, and conditional states) rather than internal implementation details.
+
 ### Step 6 — Write to resolved location
 
 - `<resolved-folder>/index.tsx`
+- `<resolved-folder>/index.test.tsx`
 - `<resolved-folder>/controller.ts` (if needed)
 - `<resolved-folder>/style.module.css` (if needed)
 
@@ -94,6 +99,19 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 - [ ] shadcn/ui used before custom markup.
 - [ ] Interactive controls are semantic, keyboard reachable, and accessible by name.
 - [ ] Text fits across mobile and desktop constraints without overlap or clipped controls.
+- [ ] `index.test.tsx` exists for new components and covers rendering + key interactions/states.
+
+### Step 8 — Validate tests for components
+
+- Run component tests after generation/update using the repository's existing test runner (`TEST.RELATED_FIRST`).
+- If the repo has no component-test setup yet, follow `docs/coding-standards.md` defaults (prefer Vitest for new setup).
+- If the user explicitly requests Jest, install Jest + Testing Library with:
+
+```bash
+npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+```
+
+- Prefer behavior-focused assertions (what user sees/can do), not implementation-detail checks.
 
 ---
 
@@ -127,8 +145,18 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 ## Import rules
 
 - Same folder: relative imports (`./controller`, `./style.module.css`).
-- Cross-module: use `@/` alias consistent with existing codebase.
+- Cross-module: use `~/` alias when configured (or the active alias in `tsconfig.json` if different).
 - Use `import type` for type-only imports.
+
+## Testing rules
+
+- Every newly created component must include `index.test.tsx`.
+- Component tests should verify:
+  - Initial render output.
+  - Required props rendering and optional props behavior.
+  - Main interaction flows (click/input/submit/toggle if applicable).
+  - State-based UI changes: loading, empty, error, disabled, success (only states owned by the component).
+- For refactors, update existing tests to keep behavior expectations accurate.
 
 ---
 
@@ -136,7 +164,7 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 
 | Component | Files needed | Notes |
 |-----------|-------------|-------|
-| `ProductCard` | `index.tsx` only | Props-only display — use shadcn/ui `Card` + Tailwind |
-| `LoginForm` | `index.tsx` + `controller.ts` | Validation + submit + loading — use shadcn/ui `Form`, `Input`, `Button` |
-| `DashboardShell` | `index.tsx` + `style.module.css` | Complex layout + animation |
-| `FilterPanel` | All 3 files | State + handlers + complex layout |
+| `ProductCard` | `index.tsx` + `index.test.tsx` | Props-only display — use shadcn/ui `Card` + Tailwind |
+| `LoginForm` | `index.tsx` + `controller.ts` + `index.test.tsx` | Validation + submit + loading — use shadcn/ui `Form`, `Input`, `Button` |
+| `DashboardShell` | `index.tsx` + `style.module.css` + `index.test.tsx` | Complex layout + animation |
+| `FilterPanel` | All 3 files + `index.test.tsx` | State + handlers + complex layout |

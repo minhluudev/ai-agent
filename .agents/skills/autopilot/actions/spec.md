@@ -12,6 +12,7 @@ Create a human-reviewable and agent-usable spec from `$ARGUMENTS`.
 - If images are provided, follow `SPEC.IMAGE_INPUT_ANALYSIS` and `SPEC.IMAGE_FACTS_VS_INFERENCES` before choosing simple vs epic path.
 - Decompose aggressively (`SPEC.ATOMIC_STEPS`): each `Implement Plan` step must target exactly one production file. A step may include the paired test file only when it directly verifies that production file.
 - Split on complexity (`SPEC.SPLIT_THRESHOLD`): use the Epic path if work has more than 3 distinct user flows, affects more than 1 domain module, or needs more than about 7 implementation steps.
+- Test coverage planning must be explicit and detailed (`TEST.BEHAVIOR_FIRST`, `TEST.RISK_PRIORITIZATION`): include happy path, validation failures, authorization boundaries, edge cases, and regression-critical scenarios.
 
 ## Image Input Procedure
 
@@ -32,7 +33,7 @@ Use this procedure whenever the user attaches a screenshot, mockup, wireframe, F
 ### Simple Path
 
 3. Write `docs/specs/{kebab-name}.md` using the Spec Template below.
-4. Fill `Implement Plan` with atomic steps, affected files, dependency order, and technical decisions. Fill `Test Plan` with concrete coverage targets.
+4. Fill `Implement Plan` with atomic steps, affected files, dependency order, and technical decisions. Fill `Test Plan` with concrete coverage targets and `Test Cases` with detailed scenarios.
 5. Update `docs/current-feature.md`: active spec path, `Sub-spec Queue` as `N/A`, and status `Spec Written`.
 6. Ask the user to review or run `/autopilot run`.
 
@@ -133,6 +134,13 @@ Not Started
 - Unit: {Utility functions and Server Actions}
 - Build: `npm run build` must pass
 - Browser/UI: {User-facing workflows, responsive viewports, and interaction states to verify}
+
+## Test Cases
+| ID | Level | Scenario | Preconditions | Steps | Expected Result | Priority |
+| --- | --- | --- | --- | --- | --- | --- |
+| TC-01 | Unit/Integration/UI | {What behavior is verified} | {State, permissions, input data} | {Numbered test steps} | {Observable outcome and assertions} | P0/P1/P2 |
+
+<!-- Include both success and failure paths. At minimum cover: happy path, input validation, auth/authz, edge cases, and one regression-risk scenario. -->
 
 ## Out of Scope
 - {Explicit exclusions}

@@ -1,7 +1,7 @@
 ---
 name: cleanup
 description: Clean up project housekeeping tasks (add "run" to execute fixes)
-argument-hint: run|check
+argument-hint: check|run|fix
 ---
 
 Review the codebase for cleanup tasks:

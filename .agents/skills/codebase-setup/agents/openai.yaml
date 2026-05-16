@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Setup"
+  short_description: "Setup and normalize project structure, dependencies, and baseline configs"
+  default_prompt: "Use $codebase-setup to bootstrap or normalize this codebase: align folder structure, install required dependencies, add/update baseline configs, enforce quality/test/CI gates, and verify with minimal, reviewable changes."
