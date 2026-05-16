@@ -11,6 +11,7 @@ Create a human-reviewable and agent-usable spec from `$ARGUMENTS`.
 - Keep specs concise; include diagrams only when they clarify behavior.
 - **Decompose aggressively** (`SPEC.ATOMIC_STEPS`): each step in `Implement Plan` must target exactly one production file. A step may include the paired test file only when it directly verifies that production file.
 - **Split on complexity** (`SPEC.SPLIT_THRESHOLD`): use the Epic path if **any** applies: >3 distinct user flows, >1 domain module affected, or estimate >7 implementation steps.
+- Test coverage planning must be explicit and detailed (`TEST.BEHAVIOR_FIRST`, `TEST.RISK_PRIORITIZATION`): include happy path, validation failures, authorization boundaries, edge cases, and regression-critical scenarios.
 
 ## Steps
 
@@ -20,7 +21,7 @@ Create a human-reviewable and agent-usable spec from `$ARGUMENTS`.
 ### Simple path (all thresholds below limit)
 
 3. Write `docs/specs/{kebab-name}.md` using the Spec Template below.
-4. Fill `Implement Plan`: atomic steps (one production file each, with direct paired test when needed), dependency order, technical decisions. Fill `Test Plan` with concrete targets.
+4. Fill `Implement Plan`: atomic steps (one production file each, with direct paired test when needed), dependency order, technical decisions. Fill `Test Plan` with concrete targets and `Test Cases` with detailed scenarios.
 5. Update `docs/current-feature.md`: set active spec path and status `Spec Written`.
 6. Ask the user to review or run `/autopilot run`.
 
@@ -28,7 +29,7 @@ Create a human-reviewable and agent-usable spec from `$ARGUMENTS`.
 
 3. Write `docs/specs/{kebab-name}-epic.md` using the Epic Template below. List all sub-specs with scope and order.
 4. Write each sub-spec as `docs/specs/{kebab-name}/part-{n}-{scope}.md` using the Spec Template below. Sub-specs run sequentially — each must be a complete committable unit. A sub-spec may assume prior sub-specs are merged; it must never assume another sub-spec is in-progress.
-5. Update `docs/current-feature.md`: set epic path, fill Sub-spec Queue with statuses, set first sub-spec as `Active`.
+5. Update `docs/current-feature.md`: set epic path, fill Sub-spec Queue with statuses, set first sub-spec as `Active`, and set Status to `Spec Written`.
 6. Ask the user to review and confirm the sub-spec breakdown before running `/autopilot run`.
 
 ## Epic Template
@@ -109,6 +110,13 @@ Not Started
 - Unit: {Domain behavior}
 - Integration: {Application/use case behavior}
 - API/Feature: {HTTP or user workflow behavior}
+
+## Test Cases
+| ID | Level | Scenario | Preconditions | Steps | Expected Result | Priority |
+| --- | --- | --- | --- | --- | --- | --- |
+| TC-01 | Unit/Integration/API | {What behavior is verified} | {State, permissions, input data} | {Numbered test steps} | {Observable outcome and assertions} | P0/P1/P2 |
+
+<!-- Include both success and failure paths. At minimum cover: happy path, input validation, auth/authz, edge cases, and one regression-risk scenario. -->
 
 ## Out of Scope
 - {Explicit exclusions}

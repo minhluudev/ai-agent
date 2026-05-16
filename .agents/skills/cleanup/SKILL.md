@@ -1,7 +1,7 @@
 ---
 name: cleanup
 description: Check or fix housekeeping issues.
-argument-hint: check|run
+argument-hint: check|run|fix
 ---
 
 # Cleanup
