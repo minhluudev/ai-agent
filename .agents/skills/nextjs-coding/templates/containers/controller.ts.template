@@ -1,0 +1,5 @@
+export const useController = () => {
+  return {
+    title: "Feature container",
+  };
+};

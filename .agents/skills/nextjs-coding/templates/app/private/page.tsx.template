@@ -1,0 +1,5 @@
+import PrivateFeatureContainer from "~/containers/private-feature-container";
+
+export default function PrivateFeaturePage() {
+  return <PrivateFeatureContainer />;
+}

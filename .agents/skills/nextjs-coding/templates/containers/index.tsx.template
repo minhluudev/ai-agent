@@ -1,0 +1,7 @@
+import { useController } from "./controller";
+
+export default function FeatureContainer() {
+  const { title } = useController();
+
+  return <section>{title}</section>;
+}

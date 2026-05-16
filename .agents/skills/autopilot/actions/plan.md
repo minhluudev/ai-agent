@@ -2,6 +2,8 @@
 
 Create or refine the `Implement Plan` from the active spec.
 
+**Scope constraint:** May only modify the `Implement Plan` and `Test Plan` sections of the spec file. Must not change `Goals`, `Requirements`, `Business Rules`, or `Out of Scope` sections. If analysis reveals a conflict with those sections, stop and report the conflict to the user before continuing.
+
 Include:
 
 - Ordered rollout steps and file paths.
@@ -13,7 +15,7 @@ Include:
 Atomicity (`SPEC.ATOMIC_STEPS`): each step targets exactly one production file. Include the paired test file only when it directly verifies that production file. Per step, include exact file path, one-line technical decision, dependency, and verification. If steps exceed about 7, stop and restructure the active spec as an epic before continuing.
 
 For Next.js work, follow this dependency order:
-`types → modules/<domain>/services → modules/<domain>/api → modules/<domain>/components → app/routes → tests`
+`types → services (mockApi + service + api-client) → containers (types/controller/components/index) → app/routes → tests`
 
 For UI work, include the expected component source (`shadcn/ui`, custom Tailwind composition, or CSS Module), required states, accessibility checks, responsive viewports, and how `UI.VISUAL_VERIFY` will be satisfied.
 

@@ -15,8 +15,8 @@ context:
     - active spec file referenced in docs/current-feature.md (not current-feature.md itself — already loaded by AGENTS.md)
     - .agents/skills/autopilot/SKILL.md
     - .agents/skills/nextjs-coding/SKILL.md for App Router architecture
-    - .agents/skills/frontend-coding-rules/SKILL.md for user-facing UI work
-    - .agents/skills/react-component-generator/SKILL.md for component generation
+    - .agents/skills/frontend-coding-rules/SKILL.md only for user-facing UI work
+    - .agents/skills/react-component-generator/SKILL.md only when creating/refactoring components
   rule: follow AGENT.SCOPED_READS and AGENT.MINIMAL_CHANGE
 
 gates:

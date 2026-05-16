@@ -5,7 +5,7 @@ description: "Enforce frontend implementation rules for the current repository. 
 
 # Frontend Coding Rules
 
-Follow the UI stack in strict priority order. Do not skip levels. Also follow the UI rule IDs in `docs/coding-standards.md`: `UI.EXISTING_SYSTEM_FIRST`, `UI.ACTUAL_EXPERIENCE_FIRST`, `UI.ACCESSIBLE_CONTROLS`, `UI.RESPONSIVE_STABLE`, `UI.FEEDBACK_STATES`, `UI.VISUAL_VERIFY`, and `UI.IMAGE_MATCH`.
+Follow the UI stack in strict priority order. Do not skip levels. Also follow the UI rule IDs in `docs/coding-standards.md`: `UI.EXISTING_SYSTEM_FIRST`, `UI.ACTUAL_EXPERIENCE_FIRST`, `UI.ACCESSIBLE_CONTROLS`, `UI.RESPONSIVE_STABLE`, `UI.FEEDBACK_STATES`, `UI.VISUAL_VERIFY`, `UI.IMAGE_MATCH`, `UI.SHADCN_GATE`, `UI.SHADCN_FALLBACK_ONLY`, and `UI.SHADCN_EVIDENCE`.
 
 ## Product Fit
 
@@ -24,12 +24,15 @@ Follow the UI stack in strict priority order. Do not skip levels. Also follow th
 
 ## UI Stack Priority
 
-### 1. shadcn/ui — always try first
+### 1. shadcn/ui via MCP shadcn — mandatory gate with evidence
 
-- Use shadcn/ui primitives when a matching component exists: `Button`, `Input`, `Dialog`, `Card`, `Select`, `Checkbox`, `Form`, `Table`, etc.
+- For each needed primitive (`button`, `input`, `card`, `select`, `textarea`, `dialog`, `checkbox`, `table`, ...), first call `get_project_registries`.
+- Then call `search_items_in_registries` for the corresponding primitive.
+- If a match exists, you must use shadcn directly or a wrapper built on top of shadcn primitives.
 - Compose and extend shadcn/ui components before writing any custom markup.
 - Pass `className` to override styles with Tailwind — do not wrap in an extra div just to apply styles.
 - Keep installed shadcn/ui registry components in the configured project path; do not move them into feature modules.
+- Tailwind/custom fallback is allowed only when one of these is true: `shadcn not initialized`, `no registry match`, or `add/install failure` with captured error.
 
 ### 2. Tailwind CSS — when shadcn/ui has no matching primitive
 
@@ -59,10 +62,19 @@ When the task requires creating a new component, **always use the `react-compone
 - Do not scaffold components by hand.
 - `react-component-generator` decides which of `index.tsx`, `controller.ts`, `style.module.css` are needed.
 
+## Required Output Section
+
+- Include `Shadcn Evidence` in the final report.
+- `Shadcn Evidence` must list tool calls used (`get_project_registries`, `search_items_in_registries`, and add/install call when attempted), primitive-by-primitive decisions (matched -> used shadcn/wrapper, or no match/error -> fallback), and explicit fallback reason for each primitive that does not use shadcn.
+
 ## Completion Checklist
 
-- [ ] shadcn/ui was considered and used where a matching primitive exists.
+- [ ] `get_project_registries` was called before primitive implementation.
+- [ ] `search_items_in_registries` was called for each needed primitive.
+- [ ] If a primitive match existed, shadcn or shadcn-based wrapper was used.
 - [ ] Tailwind was used only for gaps shadcn/ui could not fill.
+- [ ] Any Tailwind/custom fallback has one of the allowed reasons: not initialized, no match, or add/install failure.
+- [ ] Final output includes `Shadcn Evidence` with tool calls and fallback reasons.
 - [ ] CSS Module was created only when Tailwind was genuinely insufficient.
 - [ ] New components were created via `react-component-generator`.
 - [ ] UI has loading, empty, error, disabled, and success states where the workflow needs them.

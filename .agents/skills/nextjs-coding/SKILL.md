@@ -5,39 +5,21 @@ description: Build and refactor Next.js App Router features in the current repos
 
 # Next.js Coding
 
-Implement Next.js App Router code for the target repository. Treat the Target architecture below as a mandatory placement contract — not a loose example. Every new file must map to exactly one target layer before writing code.
+Implement Next.js App Router code for the target repository.
+This skill is now split into 2 parts:
+- `rules/`: one rule file per directory/file concern.
+- `templates/`: starter templates mapped to each target location.
 
-## Step 1 — Detect repo layout
+## Step 1 - Detect repo layout
 
 Before writing any file:
 
-1. Check whether the App Router root is `src/app/` or `app/`.
+1. Check whether App Router root is `src/app/` or `app/`.
 2. Set `<source-root>` = `src/` if using `src/app/`; otherwise `<source-root>` = repo root.
-3. Check which architecture anchors already exist: `modules/`, `shared/`, `services/`, `config/`, `types/`.
-4. Use the already-loaded agent instructions for project-specific overrides; read root instruction files only if they are not already in context.
-5. Match the import alias and path style already used in nearby files.
+3. Confirm architecture anchors exist: `containers/`, `components/`, `utils/`, `constants/`, `services/mockApi/`, `services/`, `config/`, `types/`.
+4. Match import alias/path style used by nearby files.
 
-## Step 2 — Map every file to a layer
-
-| Concern | Target layer |
-|---------|-------------|
-| Route files (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`) | `<source-root>/app/...` |
-| Domain business logic | `<source-root>/modules/<domain>/` |
-| External API calls for a domain | `<source-root>/modules/<domain>/api/` |
-| Domain mock API implementation | `<source-root>/modules/<domain>/api/` |
-| Business rules and data transforms | `<source-root>/modules/<domain>/services/` |
-| Module-scoped React hooks | `<source-root>/modules/<domain>/hooks/` |
-| Module-private UI components | `<source-root>/modules/<domain>/components/` |
-| Installed shadcn/ui primitives | configured path from `components.json` (often `<source-root>/components/ui/`) |
-| Domain TypeScript types / DTOs | `<source-root>/modules/<domain>/types/` |
-| Reusable cross-domain code | `<source-root>/shared/` |
-| Global API client, auth service | `<source-root>/services/` |
-| Typed env config | `<source-root>/config/env.ts` |
-| Global shared types | `<source-root>/types/` |
-
-If a file cannot be justified against this table, read more repo context before generating it.
-
-## Target architecture tree
+## Step 2 - Target architecture tree
 
 ```text
 src/
@@ -45,29 +27,29 @@ src/
 │   ├── layout.tsx
 │   ├── page.tsx
 │   ├── (private)/
-│   │   └── orders/
+│   │   └── <url-path-name>/
 │   │       ├── page.tsx
 │   │       ├── loading.tsx
 │   │       └── error.tsx
 │   └── (public)/
-│       └── home/
+│       └── <url-path-name>/
 │           └── page.tsx
-├── modules/
-│   ├── order/
-│   │   ├── api/
-│   │   ├── hooks/
-│   │   ├── components/
+├── containers/
+│   ├── <url-path-name-container>/
 │   │   ├── types/
-│   │   └── services/
-│   └── voucher/
-├── shared/
-│   ├── components/
-│   ├── hooks/
-│   ├── utils/
-│   └── constants/
+│   │   ├── components/
+│   │   ├── controller.ts
+│   │   └── index.tsx
+│   └── <url-path-name-container>/
+├── components/
+│   └── <component-name>/
+├── utils/
+├── constants/
 ├── services/
+│   ├── mockApi/
+│   │   └── <service-name>.mock.ts
 │   ├── api-client.ts
-│   └── auth.service.ts
+│   └── <service-name>.service.ts
 ├── tests/
 │   └── e2e/
 ├── styles/
@@ -76,78 +58,55 @@ src/
 └── types/
 ```
 
-> Route groups `(private)` and `(public)` are organization-only — they do not appear in URLs.
+Naming requirement: all placeholder path segments in this architecture (for example `<url-path-name>`, `<url-path-name-container>`, `<component-name>`, `<service-name>`) must be `kebab-case` when creating new folders/files.
 
-## Step 3 — Apply App Router conventions
+## Step 3 - Map changed files to rules/templates
 
-- `params` is async in `page.tsx` and `layout.tsx`; `searchParams` is async in `page.tsx` only. Layouts do not receive `searchParams`.
-- `error.tsx` **must** be a Client Component (`'use client'`) and expose recovery through the supported Next.js error boundary prop for the installed version.
-- `loading.tsx` is a Suspense boundary fallback — keep it lightweight.
-- `page.tsx` composes hooks/components from `modules/<domain>` — no heavy business logic inline.
+- Use `rules/README.md` as the mapping index (path -> rule -> template).
+- Load only the rule files required by the files you are changing.
+- Reuse templates only for the paths you actually create.
+- If a file cannot be mapped from `rules/README.md`, stop and load more repo context before writing.
 
-### Data flow (follow this order)
+## Step 4 - Component generation requirement
 
-```
+When creating components inside:
+- `<source-root>/containers/<url-path-name-container>/components/`
+- `<source-root>/components/<component-name>/`
+
+You must apply `.agents/skills/react-component-generator/SKILL.md`.
+
+## Step 5 - Data flow
+
+```text
 app/.../page.tsx
-  → modules/<domain>/hooks  or  modules/<domain>/services
-    → modules/<domain>/api
-      → if EXTERNAL_API=mock: mockApi
-      → if EXTERNAL_API=api: services/api-client.ts
+  -> containers/<url-path-name-container>/index.tsx
+    -> containers/<url-path-name-container>/controller.ts
+      -> services/<service-name>.service.ts
+        -> if EXTERNAL_API=mock: services/mockApi/<service-name>.mock.ts
+        -> if EXTERNAL_API=api (or missing): services/api-client.ts
 ```
-
-### API source switch (mock vs real API)
-
-- Every domain that calls external APIs must provide a mock API implementation inside `<source-root>/modules/<domain>/api/` (for example `mockApi.ts`).
-- API access layer must switch source by env variable `EXTERNAL_API`:
-  - `EXTERNAL_API=mock` -> use `mockApi`
-  - `EXTERNAL_API=api` -> use real API implementation
-- Default env value is `EXTERNAL_API=api` when the variable is missing or unspecified.
-- Keep the switch logic centralized in the domain API layer (avoid scattering env checks across page/component files).
-- `services/api-client.ts` is used only by the real API path (`EXTERNAL_API=api`).
-- Mock and real API implementations must share one response contract/type source in `<source-root>/modules/<domain>/types/` to prevent drift.
-- For automated tests (unit/integration/E2E/CI), set `EXTERNAL_API=mock` unless the spec explicitly requires validating real/sandbox API behavior.
 
 ## Guardrails
 
-- **Never** mix Pages Router (`pages/`) files into this architecture.
-- **Never** split App Router across `app/` and `src/app/` — `app/` at root takes precedence and `src/app/` is silently ignored.
-- **Never** create `features/` or `lib/` when equivalent target layers already exist.
-- **Never** hide business logic in route-private helpers (`_lib`) — put it in `modules/` or `shared/`.
-- **Never** create parallel architecture roots (`src/modules/` and `modules/` in the same task).
-- **Never** call real API directly from page/component files; always go through `modules/<domain>/api/` with the `EXTERNAL_API` switch.
-- Keep `'use client'` minimal — add only when interactivity, hooks, or browser APIs are required.
-- Keep import paths consistent with `tsconfig.json` path aliases.
-- Do not relocate installed shadcn/ui primitives into domain modules; compose them from the configured registry path.
-
-## Automation E2E Testing (Playwright)
-
-- For user-facing flow changes (navigation, form submit, auth flow, checkout/order flow, multi-step interactions), create or update automation E2E tests.
-- E2E tests must validate real flow behavior end-to-end (user action -> UI/state transition -> expected outcome), not implementation details.
-- Prefer Playwright, following the official Next.js guide for Playwright E2E setup and usage.
-- If Playwright is not set up yet, initialize with:
-
-```bash
-npm init playwright@latest
-```
-
-- Automation test path convention:
-  - Preferred default: `<source-root>/tests/` (with E2E specs under `<source-root>/tests/e2e/`).
-  - If the repo already uses another E2E folder convention, keep existing convention and do not duplicate roots.
-- Keep naming consistent (for example `*.spec.ts`).
-- Run E2E tests for affected flows before finishing (for example `npx playwright test` or project-specific `npm run test:e2e` when available).
+- Never mix Pages Router (`pages/`) with this architecture.
+- Never split App Router across both `app/` and `src/app/`.
+- Never place feature pages at app root; only `app/page.tsx` can stay at root.
+- Never place business orchestration in route `page.tsx`; keep it in container `controller.ts`.
+- Never call external APIs directly from pages/components; call through services.
+- Never scatter `EXTERNAL_API` checks across pages/components/controllers; keep source switching in `services/<service-name>.service.ts`.
+- Never create components in `containers/**/components` or `components/**` without `react-component-generator`.
+- For E2E generation, never add scenarios outside active spec scope before covering `docs/specs` test cases.
 
 ## Pre-finish checklist
 
-- [ ] Every new file path is justified against the Target architecture table.
-- [ ] No duplicate architecture roots or ad-hoc top-level folders introduced.
-- [ ] Root `layout.tsx` defines `<html>` and `<body>`.
-- [ ] `error.tsx` is a Client Component with the supported recovery prop for the installed Next.js version.
-- [ ] Business logic lives in `modules/` or `services/`, not in route files.
-- [ ] Shared code is genuinely cross-domain (used by ≥ 2 domains).
-- [ ] shadcn/ui primitives remain in the configured path and feature components compose them.
-- [ ] Domain API layer includes `mockApi` and real API path with env switch (`EXTERNAL_API=mock|api`), defaulting to `api`.
-- [ ] Mock and real API paths share the same typed contract (no response-shape drift).
-- [ ] Automated tests set `EXTERNAL_API=mock` unless real API verification is explicitly required by spec.
-- [ ] Automation test files are placed under `<source-root>/tests/` (or existing repo E2E path when already established).
-- [ ] Run `npm run lint` if changes are substantial.
-- [ ] E2E tests are added/updated for changed user-facing flows and pass for affected scenarios.
+- [ ] Every changed file maps to one path in the table.
+- [ ] New folders/files use `kebab-case` path segments unless the filename is framework-fixed (for example `page.tsx`, `index.tsx`).
+- [ ] Relevant rule files under `rules/` were applied.
+- [ ] Template reuse was considered before writing custom code.
+- [ ] Feature routes are only under `(public)` or `(private)`.
+- [ ] Route pages delegate to containers; controllers own orchestration.
+- [ ] Service layer applies one source switch (`EXTERNAL_API=mock|api`) and defaults to `api` when missing.
+- [ ] Mock service file in `services/mockApi/` keeps response contract aligned with real service path.
+- [ ] E2E scenarios map to `docs/specs` test cases (prioritize P0/P1 first when defined).
+- [ ] E2E tests added/updated for changed user flows.
+- [ ] `npm run lint` executed when changes are substantial.

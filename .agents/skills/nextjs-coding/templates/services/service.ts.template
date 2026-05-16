@@ -1,0 +1,21 @@
+import { request } from "./api-client";
+import { getItemsMock } from "./mockApi/<service-name>.mock";
+
+export interface ItemDto {
+  id: string;
+  name: string;
+}
+
+const API_SOURCE = process.env.EXTERNAL_API ?? "api";
+
+const getItemsFromApi = async () => {
+  return request<ItemDto[]>("/api/items");
+};
+
+export const getItems = async () => {
+  if (API_SOURCE === "mock") {
+    return getItemsMock();
+  }
+
+  return getItemsFromApi();
+};

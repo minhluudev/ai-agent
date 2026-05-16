@@ -46,6 +46,9 @@ Pick exactly one workflow per task. When ambiguous, use this priority:
 
 Precedence rule: if the target is `AGENTS.md`, `docs/`, `.agents/workflows/`, `.agents/skills/`, or the request is context/token optimization, use **documentation-update.yaml** unless the user explicitly asks for a different workflow.
 
+Command override:
+- `/autopilot spec` and `/autopilot run` use **feature-development.yaml** by default, even though they may update files under `docs/`.
+
 If priority does not resolve the ambiguity, ask the user.
 
 ## Skill Map

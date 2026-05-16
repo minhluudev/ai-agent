@@ -1,0 +1,7 @@
+interface IProps {
+  title: string;
+}
+
+export default function FeatureSection({ title }: IProps) {
+  return <div>{title}</div>;
+}

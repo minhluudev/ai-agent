@@ -24,6 +24,7 @@ For Next.js App Router projects, this skill must comply with `nextjs-coding` as 
 ## Safety and scope rules
 
 - Follow `AGENT.MINIMAL_CHANGE`, `AGENT.SCOPED_READS`, `AGENT.UNRELATED_FILES`, `AGENT.SAFE_OPERATIONS`.
+- Follow `AGENT.KEBAB_CASE_PATHS` for new folder/file names unless a tool/framework requires a fixed filename.
 - Do not install dependencies or rewrite architecture without explicit user approval.
 - Stage setup changes in small batches (structure -> dependencies -> config -> verify).
 - Preserve public behavior unless the user explicitly requests breaking changes (`AGENT.CONTRACT_STABILITY`).
@@ -47,6 +48,7 @@ For Next.js App Router projects, this skill must comply with `nextjs-coding` as 
 
 - Define folder ownership before moving files.
 - For Next.js projects, resolve `<source-root>` exactly as `nextjs-coding` defines, then align all paths to its target layers.
+- When creating new path segments during setup/normalization, use `kebab-case`.
 - Prepare a move map (source -> destination) and keep migration incremental.
 - Avoid unrelated renames/churn.
 
@@ -61,8 +63,11 @@ For Next.js App Router projects, this skill must comply with `nextjs-coding` as 
   - E2E testing
   - automation hooks
 
-For Next.js baseline package choices and commands, read:
-- `references/nextjs-baseline.md`
+For Next.js baseline details, load only the section you need:
+- `references/nextjs-baseline-structure.md`
+- `references/nextjs-baseline-dependencies.md`
+- `references/nextjs-baseline-config.md`
+- `references/nextjs-baseline-verification.md`
 
 ### 4. Config baseline
 

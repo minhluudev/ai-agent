@@ -1,0 +1,4 @@
+export interface FeatureViewModel {
+  id: string;
+  name: string;
+}

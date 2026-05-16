@@ -1,0 +1,5 @@
+import PublicFeatureContainer from "~/containers/public-feature-container";
+
+export default function PublicFeaturePage() {
+  return <PublicFeatureContainer />;
+}

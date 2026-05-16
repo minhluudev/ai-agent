@@ -16,4 +16,4 @@ Also check:
 - No unnecessary dependencies added.
 - `npm run build` passes.
 - No obvious N+1 queries (Prisma `findMany` inside loops).
-- Architecture stays within `nextjs-coding` layer boundaries.
+- Architecture stays within `nextjs-coding` layer boundaries: no business logic in `app/**/page.tsx`, no direct API calls from components or pages, `EXTERNAL_API` switch only in `services/<name>.service.ts`, no Pages Router files mixed in, no features placed outside `containers/` or `components/`.

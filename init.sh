@@ -24,5 +24,5 @@ link_skills() {
 
 echo "Linking skills..."
 link_skills "$SCRIPT_DIR/.claude"
-link_skills "$SCRIPT_DIR/.codex"
+# link_skills "$SCRIPT_DIR/.codex"
 echo "Done."

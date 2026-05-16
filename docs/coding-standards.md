@@ -12,6 +12,7 @@ Source of truth for shared rule IDs plus code, test, and commit rules in target 
 - `AGENT.CONTRACT_STABILITY`: preserve public contracts unless the user requests a breaking change.
 - `AGENT.UNRELATED_FILES`: do not reformat or modify unrelated files.
 - `AGENT.SAFE_OPERATIONS`: do not add dependencies, change `.env`, alter public APIs, or run destructive operations without approval.
+- `AGENT.KEBAB_CASE_PATHS`: when creating new folders/files, use `kebab-case` for directory names and filename stems unless a framework/tool requires a fixed filename (for example `page.tsx`, `layout.tsx`, `index.tsx`, `README.md`).
 - `GATE.WORKFLOW_OWNERSHIP`: approval gates are defined by the active workflow.
 
 ### Spec Rules
@@ -35,7 +36,10 @@ Source of truth for shared rule IDs plus code, test, and commit rules in target 
 
 ### Styling Rules
 
-- `STYLE.STACK_PRIORITY`: use shadcn/ui first, Tailwind CSS second, CSS Modules last.
+- `STYLE.STACK_PRIORITY`: use shadcn/ui first, Tailwind CSS second, CSS Modules last; shadcn/ui is mandatory when a registry match exists for the needed primitive.
+- `UI.SHADCN_GATE`: before implementing a UI primitive, call `get_project_registries` and `search_items_in_registries` (for the target primitive) to verify availability.
+- `UI.SHADCN_FALLBACK_ONLY`: fallback to Tailwind/custom HTML only when shadcn is not initialized, no registry match exists, or add/install fails.
+- `UI.SHADCN_EVIDENCE`: output must include a `Shadcn Evidence` section listing tool calls and explicit fallback reasons for each primitive not using shadcn.
 - `TAILWIND.V4_CSS_CONFIG`: Tailwind CSS v4 configuration belongs in CSS with `@theme`; do not create `tailwind.config.ts` or `tailwind.config.js`.
 - `UI.EXISTING_SYSTEM_FIRST`: match the existing app layout, component density, spacing, typography, and interaction patterns before adding new visual language.
 - `UI.ACTUAL_EXPERIENCE_FIRST`: build the requested usable screen or workflow first; do not replace app work with a marketing/landing page unless explicitly requested.
@@ -63,103 +67,9 @@ Source of truth for shared rule IDs plus code, test, and commit rules in target 
 
 - `ERROR.THREE_ATTEMPTS_STOP`: after 3 failed attempts at the same fix, stop and report root cause, attempts, and blocker.
 
-## Commit Rules
+## Implementation Defaults (Concise)
 
-- Follow `COMMIT.APPROVAL`, `COMMIT.SCOPED_STAGE`, `COMMIT.NO_AI_ATTRIBUTION`, and `COMMIT.BUILD_GATE`.
-- Use conventional commit format: `type(scope): subject` with types `feat|fix|refactor|test|docs|chore`.
-- Write subjects as user-facing or technical intent, not implementation mechanics.
-
-## TypeScript
-
-- Strict mode enabled.
-- No `any` types — use proper typing or `unknown`.
-- Define interfaces for all props, API responses, and data models.
-- Use type inference where obvious, explicit types where helpful.
-
-## React
-
-- Functional components only (no class components).
-- Use hooks for state and side effects.
-- Keep components focused — one job per component.
-- Extract reusable logic into custom hooks.
-- Prefer semantic HTML and controlled component boundaries over generic wrapper markup.
-
-## Next.js
-
-- Follow `NEXT.SERVER_DEFAULT`, `NEXT.CLIENT_ONLY_WHEN_NEEDED`, `NEXT.DATA_DIRECT`, `NEXT.SERVER_ACTIONS`, `NEXT.API_ROUTES_WHEN_HTTP_CONTRACT`, and `NEXT.VALIDATE_WITH_ZOD`.
-- Use API routes when you need:
-  - Webhooks (Stripe, GitHub, etc.)
-  - File uploads with progress tracking
-  - Long-running operations
-  - Specific HTTP status codes or headers
-  - Endpoints for future mobile/CLI clients
-  - Third-party integrations
-- Dynamic routes for item/collection pages.
-- File placement follows `nextjs-coding` skill target architecture.
-
-## Tailwind CSS v4
-
-- Follow `TAILWIND.V4_CSS_CONFIG`.
-- All theme configuration must be done in CSS using the `@theme` directive in `<source-root>/app/globals.css`.
-- Use CSS custom properties for colors, spacing, etc.
-- No JavaScript-based config allowed.
-
-Example v4 configuration:
-
-```css
-@import "tailwindcss";
-
-@theme {
-  --color-primary: oklch(50% 0.2 250);
-}
-```
-
-## Naming
-
-- Components: PascalCase (`ItemCard.tsx`)
-- Files: Match component name or kebab-case
-- Functions: camelCase
-- Constants: SCREAMING_SNAKE_CASE
-- Types/Interfaces: PascalCase (no prefix)
-
-## Styling
-
-- UI stack priority follows `STYLE.STACK_PRIORITY`. See `frontend-coding-rules` for details.
-- Follow `UI.EXISTING_SYSTEM_FIRST`, `UI.ACTUAL_EXPERIENCE_FIRST`, `UI.ACCESSIBLE_CONTROLS`, `UI.RESPONSIVE_STABLE`, `UI.FEEDBACK_STATES`, `UI.VISUAL_VERIFY`, and `UI.IMAGE_MATCH`.
-- No inline styles.
-
-## Database
-
-- Use Prisma ORM for all database operations.
-- Always use `prisma migrate dev` for schema changes (not `db push`).
-- Run `prisma migrate status` before committing to verify migrations are in sync.
-- Production deployments must run `prisma migrate deploy` before the app starts.
-
-## Data Fetching
-
-- Server Components fetch directly with Prisma when possible.
-- Client Components use Server Actions for simple mutations.
-- Validate all external input with Zod.
-
-## Error Handling
-
-- Use try/catch in Server Actions.
-- Return `{ success, data, error }` pattern from actions.
-- Display user-friendly error messages via toast.
-- Follow `ERROR.THREE_ATTEMPTS_STOP`.
-
-## Test Rules
-
-- Follow `TEST.BEHAVIOR_FIRST`, `TEST.RELATED_FIRST`, `TEST.RISK_PRIORITIZATION`, and `TEST.GAP_DISCLOSURE`.
-- Prefer the repository's existing test runner. For this kit's target stack, use Vitest when configuring tests.
-- Unit: isolated logic with no DB or HTTP.
-- Integration: real test DB, full action/service flow.
-- Feature/E2E: user-facing workflows and HTTP responses.
-- New behavior and bug fixes should include tests when practical; refactors should run existing related tests.
-- Run related tests before `npm run build` when a test runner is configured.
-
-## Code Quality
-
-- No commented-out code unless specified.
-- No unused imports or variables.
-- Keep functions under 50 lines when possible.
+- Use the Rule ID sections above as the single source of truth (`AGENT.*`, `SPEC.*`, `NEXT.*`, `STYLE/UI.*`, `COMMIT.*`, `TEST.*`, `ERROR.*`).
+- In skills/workflows, reference Rule IDs instead of restating rule text.
+- Default stack expectations: TypeScript strict, React functional components, Next.js App Router, Tailwind v4 CSS config, Zod for external input.
+- Keep diffs minimal/scoped, and keep naming aligned with `AGENT.KEBAB_CASE_PATHS`.

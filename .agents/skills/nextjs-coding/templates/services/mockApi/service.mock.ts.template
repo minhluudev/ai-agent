@@ -1,0 +1,8 @@
+import type { ItemDto } from "../<service-name>.service";
+
+export const getItemsMock = async (): Promise<ItemDto[]> => {
+  return [
+    { id: "item-1", name: "Mock Item 1" },
+    { id: "item-2", name: "Mock Item 2" },
+  ];
+};
