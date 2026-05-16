@@ -22,8 +22,10 @@ Use this procedure whenever the user attaches a screenshot, mockup, wireframe, F
 2. Extract visible facts: screen type, route/page intent, major regions, navigation, forms, tables/lists/cards, controls, icons, copy, data shown, and visible states.
 3. Infer implementation shape: likely components, server/client boundaries, data needs, validation, interactions, and reusable primitives from the existing design system.
 4. Capture visual constraints: approximate layout hierarchy, spacing density, alignment, responsive behavior assumptions, overflow risk, empty/loading/error/disabled states, and accessibility concerns.
-5. Record uncertainty explicitly. If missing information changes behavior, files, or tests, ask one clarification. Otherwise make a conservative assumption and list it in the spec.
-6. Do not copy an image blindly. Preserve intent and hierarchy while adapting to `frontend-coding-rules`, shadcn/ui availability, existing repo patterns, and `UI.IMAGE_MATCH`.
+5. Extract style system details as explicitly as possible: color palette (primary/secondary/background/text/border states), gradients/shadows, typography scale (font family, size, weight, line-height), border radius, spacing rhythm, icon style, and motion/transition cues.
+6. Build a component inventory from the design: identify screen-level components, reusable blocks, and primitives; mark which shared components already exist in the codebase and which are missing and must be created.
+7. Record uncertainty explicitly. If missing information changes behavior, files, or tests, ask one clarification. Otherwise make a conservative assumption and list it in the spec.
+8. Do not copy an image blindly. Preserve intent, hierarchy, and visual language while adapting to `frontend-coding-rules`, shadcn/ui availability, existing repo patterns, and `UI.IMAGE_MATCH`.
 
 ## Steps
 
@@ -107,8 +109,20 @@ Not Started
 ### Visible Facts
 - {Layout regions, controls, text, data, states, and visual hierarchy observed directly in the image.}
 
+### Visual Style Breakdown
+- {Color system: brand/primary/secondary/neutral/surface/text/border/semantic colors and state variants.}
+- {Typography: font family, scale, weight, line-height, letter spacing, text emphasis hierarchy.}
+- {Look and feel: corner radius, borders, elevation/shadows, gradients/patterns, icon style, density, whitespace rhythm.}
+- {Motion cues: hover/active/focus/loading transitions and perceived interaction feedback.}
+
+### Component Inventory (Design vs Codebase)
+- {Components detected in design: page sections, cards, forms, tables, nav, modals, widgets.}
+- {Shared components already available in codebase that can be reused directly.}
+- {Shared components missing from codebase and required to be created.}
+- {Mapping to shadcn/ui primitives vs custom components, with reuse priority.}
+
 ### Implementation Assumptions
-- {Assumptions about routes, data, interactions, responsive behavior, and design-system mappings.}
+- {Assumptions about routes, data, interactions, responsive behavior, design-system mappings, and token approximations when exact values are unknown.}
 
 ### Open Questions
 - {Only questions that would change behavior, files, or tests. Use "None" if safe assumptions were made.}

@@ -73,6 +73,7 @@ For Next.js baseline package choices and commands, read:
   - ESLint + Prettier
   - test runner + test environment
   - E2E runner
+  - automation test path (`<source-root>/tests/` by default; keep existing path if repo already standardizes differently)
   - env schema and defaults
   - path alias and import boundaries
 - Require import alias prefix `~/` for app code:
@@ -93,6 +94,9 @@ For Next.js baseline package choices and commands, read:
   - unit/integration test
   - build
   - E2E (when enabled)
+- Ensure E2E files are rooted in one consistent location:
+  - preferred: `<source-root>/tests/` (E2E specs under `<source-root>/tests/e2e/`)
+  - fallback: existing repo E2E path without creating duplicate test roots
 - Add pre-commit / commit message checks only when approved.
 - Add or update CI to run the same gates as local scripts.
 

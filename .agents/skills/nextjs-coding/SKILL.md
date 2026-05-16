@@ -68,6 +68,8 @@ src/
 ├── services/
 │   ├── api-client.ts
 │   └── auth.service.ts
+├── tests/
+│   └── e2e/
 ├── styles/
 ├── config/
 │   └── env.ts
@@ -128,7 +130,10 @@ app/.../page.tsx
 npm init playwright@latest
 ```
 
-- Place tests in the repository's existing E2E location (commonly `e2e/` or `tests/e2e/`) and keep naming consistent (for example `*.spec.ts`).
+- Automation test path convention:
+  - Preferred default: `<source-root>/tests/` (with E2E specs under `<source-root>/tests/e2e/`).
+  - If the repo already uses another E2E folder convention, keep existing convention and do not duplicate roots.
+- Keep naming consistent (for example `*.spec.ts`).
 - Run E2E tests for affected flows before finishing (for example `npx playwright test` or project-specific `npm run test:e2e` when available).
 
 ## Pre-finish checklist
@@ -143,5 +148,6 @@ npm init playwright@latest
 - [ ] Domain API layer includes `mockApi` and real API path with env switch (`EXTERNAL_API=mock|api`), defaulting to `api`.
 - [ ] Mock and real API paths share the same typed contract (no response-shape drift).
 - [ ] Automated tests set `EXTERNAL_API=mock` unless real API verification is explicitly required by spec.
+- [ ] Automation test files are placed under `<source-root>/tests/` (or existing repo E2E path when already established).
 - [ ] Run `npm run lint` if changes are substantial.
 - [ ] E2E tests are added/updated for changed user-facing flows and pass for affected scenarios.

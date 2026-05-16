@@ -13,12 +13,13 @@ Use this reference when the target codebase is Next.js App Router.
 ├── styles/
 ├── config/
 ├── types/
-└── e2e/ (if Playwright is enabled)
+└── tests/
 ```
 
 Notes:
 - `<source-root>` is `src/` when app router is under `src/app`, otherwise repo root.
 - Keep domain code under `modules/<domain>/...`.
+- Keep automation tests under `<source-root>/tests/` (recommended E2E specs in `<source-root>/tests/e2e/`).
 - Route groups such as `(public)` / `(private)` are optional but should stay under `app/`.
 - Never split App Router across both `app/` and `src/app/`.
 

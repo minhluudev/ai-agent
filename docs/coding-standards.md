@@ -65,12 +65,9 @@ Source of truth for shared rule IDs plus code, test, and commit rules in target 
 
 ## Commit Rules
 
-- Use conventional commit format: `type(scope): subject` — types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`.
-- Write subject lines that describe the user-facing or technical intent, not implementation mechanics — save rationale for the commit body when needed.
-- Stage only files touched by the task; never `git add .` or `git add -A`.
-- Run `npm run build` and confirm it passes before staging.
-- No AI attribution or co-author trailers in commit messages.
-- Always ask the user before committing (`COMMIT.APPROVAL`).
+- Follow `COMMIT.APPROVAL`, `COMMIT.SCOPED_STAGE`, `COMMIT.NO_AI_ATTRIBUTION`, and `COMMIT.BUILD_GATE`.
+- Use conventional commit format: `type(scope): subject` with types `feat|fix|refactor|test|docs|chore`.
+- Write subjects as user-facing or technical intent, not implementation mechanics.
 
 ## TypeScript
 
@@ -103,7 +100,7 @@ Source of truth for shared rule IDs plus code, test, and commit rules in target 
 ## Tailwind CSS v4
 
 - Follow `TAILWIND.V4_CSS_CONFIG`.
-- All theme configuration must be done in CSS using the `@theme` directive in `src/app/globals.css`.
+- All theme configuration must be done in CSS using the `@theme` directive in `<source-root>/app/globals.css`.
 - Use CSS custom properties for colors, spacing, etc.
 - No JavaScript-based config allowed.
 
@@ -153,8 +150,8 @@ Example v4 configuration:
 
 ## Test Rules
 
-- Prefer the repository's existing test runner. For this kit's target stack, use Vitest when configuring tests.
 - Follow `TEST.BEHAVIOR_FIRST`, `TEST.RELATED_FIRST`, `TEST.RISK_PRIORITIZATION`, and `TEST.GAP_DISCLOSURE`.
+- Prefer the repository's existing test runner. For this kit's target stack, use Vitest when configuring tests.
 - Unit: isolated logic with no DB or HTTP.
 - Integration: real test DB, full action/service flow.
 - Feature/E2E: user-facing workflows and HTTP responses.

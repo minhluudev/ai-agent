@@ -73,6 +73,7 @@ Use the closest template from `templates/` as scaffolding — **never leave plac
 - `templates/style.module.css` → CSS module base
 
 Templates are minimal scaffolds. Add `IProps`, `useController(props)`, and returned controller values only when the target component actually needs them. Replace `ComponentName` and remove any unused controller call before finishing. If props + controller wiring is still unclear, read `references/props-controller-pattern.md`.
+Test templates are only a starting point: replace placeholder assertions/TODOs with behavior assertions for the actual component before completing the task.
 
 Generated components must include user-facing states the component owns: loading, empty, error, disabled, and success where relevant. Do not create placeholder text explaining how the component works.
 
@@ -100,6 +101,7 @@ If the folder already exists, patch only relevant files — do not rewrite uncha
 - [ ] Interactive controls are semantic, keyboard reachable, and accessible by name.
 - [ ] Text fits across mobile and desktop constraints without overlap or clipped controls.
 - [ ] `index.test.tsx` exists for new components and covers rendering + key interactions/states.
+- [ ] No placeholder test assertions/TODOs remain in final component tests.
 
 ### Step 8 — Validate tests for components
 

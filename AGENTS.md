@@ -10,7 +10,7 @@ Code rules live in `docs/coding-standards.md`. Skills add domain-specific rules;
 - `/autopilot spec {requirement}`: write a spec in `docs/specs/` and set it active.
 - `/autopilot run`: analyze -> plan -> implement/test -> summary -> commit (with gates).
 - `/autopilot bugfix|refactor|testgen`: focused maintenance tasks.
-- `/cleanup check|run`: inspect or fix housekeeping issues.
+- `/cleanup check|run|fix`: inspect or fix housekeeping issues.
 
 ## Context Loading Contract
 
